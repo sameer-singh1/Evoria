@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Generated Prisma client (regenerated via `npx prisma generate`)
+backend/src/generated/
+
+# Environment variables (contains real secrets — never commit)
+.env
+.env.local
+
+# Editor/OS
+.DS_Store
+*.log

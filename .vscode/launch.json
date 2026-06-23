@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Evoria Backend",
+      "program": "${workspaceFolder}/backend/dist/index.js",
+      "outFiles": ["${workspaceFolder}/backend/dist/**/*.js"]
+    }
+  ]
+}
