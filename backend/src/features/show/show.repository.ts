@@ -1,6 +1,14 @@
 import { prisma } from "../../shared/database/connection";
 
 export class ShowRepository {
+  async findSeatsByShowId(showId: string) {
+    return prisma.seat.findMany({ where: { showId } });
+  }
+
+  async findByEventId(eventId: string) {
+    return prisma.show.findMany({ where: { eventId } });
+  }
+
   async createWithSeats(data: {
     eventId: string;
     venueId: string;

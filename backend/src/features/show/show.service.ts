@@ -5,6 +5,14 @@ export class ShowService {
   private repository = new ShowRepository();
   private eventRepository = new EventRepository();
 
+  async listSeats(showId: string) {
+    return this.repository.findSeatsByShowId(showId);
+  }
+
+  async listShows(eventId: string) {
+    return this.repository.findByEventId(eventId);
+  }
+
   async createShow(
     organizerId: string,
     eventId: string,

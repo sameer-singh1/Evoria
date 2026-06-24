@@ -4,6 +4,18 @@ import { ShowService } from "./show.service";
 export class ShowController {
   private service = new ShowService();
 
+  async listSeats(req: Request, res: Response) {
+    const showId = req.params.showId as string;
+    const seats = await this.service.listSeats(showId);
+    res.json({ data: seats });
+  }
+
+  async listShows(req: Request, res: Response) {
+    const eventId = req.params.eventId as string;
+    const shows = await this.service.listShows(eventId);
+    res.json({ data: shows });
+  }
+
   async createShow(req: Request, res: Response) {
     const { venueId, startsAt, seats } = req.body;
     const eventId = req.params.eventId as string;
