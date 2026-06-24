@@ -8,4 +8,12 @@ export class BookingRepository {
   async cancel(bookingId: string) {
     await prisma.booking.update({ where: { id: bookingId }, data: { status: "CANCELLED" } });
   }
+
+  async findById(bookingId: string) {
+    return prisma.booking.findUnique({ where: { id: bookingId } });
+  }
+
+  async confirm(bookingId: string) {
+    await prisma.booking.update({ where: { id: bookingId }, data: { status: "CONFIRMED" } });
+  }
 }

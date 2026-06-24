@@ -3,6 +3,7 @@ import { EventController } from "./features/event/event.controller";
 import { AuthController } from "./features/auth/auth.controller";
 import { ShowController } from "./features/show/show.controller";
 import { BookingController } from "./features/booking/booking.controller";
+import { PaymentWebhookController } from "./features/booking/payment-webhook.controller";
 import { authenticate } from "./shared/middleware/authenticate";
 
 const app = express();
@@ -11,6 +12,9 @@ const eventController = new EventController();
 const authController = new AuthController();
 const showController = new ShowController();
 const bookingController = new BookingController();
+const paymentWebhookController = new PaymentWebhookController();
+
+app.post("/webhooks/payment", express.text({ type: "application/json" }), (req, res) => paymentWebhookController.handle(req, res));
 
 app.use(express.json());
 

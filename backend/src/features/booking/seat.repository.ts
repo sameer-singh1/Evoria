@@ -5,6 +5,13 @@ export class SeatRepository {
     return prisma.seat.findMany({ where: { id: { in: seatIds } } });
   }
 
+  async bookSeats(bookingId: string) {
+    await prisma.seat.updateMany({
+      where: { bookingId },
+      data: { status: "BOOKED", holdExpiresAt: null },
+    });
+  }
+
   async releaseSeats(bookingId: string) {
     await prisma.seat.updateMany({
       where: { bookingId },
