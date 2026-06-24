@@ -51,6 +51,7 @@ Create a `.env` file inside the `backend/` folder:
 ```env
 DATABASE_URL="mysql://root:root@localhost:3307/evoria"
 JWT_SECRET="your-secret-key"
+PAYMENT_WEBHOOK_SECRET="your-webhook-secret"
 ```
 
 ### 5. Run database migrations
@@ -83,7 +84,77 @@ The server starts on `http://localhost:3000`.
 | POST | `/auth/login` | None | Login and receive JWT |
 | GET | `/events` | None | List all published events |
 | POST | `/events` | Bearer token (Organizer) | Create a new event |
-| POST | `/events/:eventId/shows` | Bearer token (Organizer) | Create a show with seats for an event |
+| GET | `/events/:eventId/shows` | None | List shows for an event |
+| POST | `/events/:eventId/shows` | Bearer token (Organizer) | Create a show with seats |
+| GET | `/shows/:showId/seats` | None | List all seats for a show |
+| POST | `/bookings` | Bearer token (Attendee) | Hold seats and create a booking |
+| POST | `/webhooks/payment` | HMAC signature | Confirm payment and finalize booking |
+
+## Testing the Payment Flow
+
+Since there is no real payment gateway integrated yet, the webhook must be called manually with a computed HMAC signature.
+
+### Step 1 — Register and login as an attendee
+
+```
+POST /auth/register
+{ "email": "attendee@example.com", "password": "Test1234", "name": "Test User", "role": "ATTENDEE" }
+```
+
+```
+POST /auth/login
+{ "email": "attendee@example.com", "password": "Test1234" }
+```
+
+Copy the `token` from the response.
+
+### Step 2 — Browse and pick seats
+
+```
+GET /events
+GET /events/:eventId/shows
+GET /shows/:showId/seats
+```
+
+Copy the `id` values of the seats you want to book.
+
+### Step 3 — Create a booking
+
+```
+POST /bookings
+Authorization: Bearer <token>
+{ "showId": "<showId>", "seatIds": ["<seatId1>", "<seatId2>"] }
+```
+
+Copy the `id` from the response — this is your `bookingId`. Seats are now HELD for 10 minutes.
+
+### Step 4 — Compute the webhook signature
+
+Run this in the `backend/` folder, replacing the `bookingId` and body with the exact JSON you will send:
+
+```bash
+node -e "
+const c = require('crypto');
+const body = '{\"bookingId\":\"<your-bookingId>\"}';
+console.log(c.createHmac('sha256', '<your-PAYMENT_WEBHOOK_SECRET>').update(body).digest('hex'));
+"
+```
+
+> The body string used here must match **exactly** what you send in the request — same whitespace, same formatting.
+
+### Step 5 — Call the webhook
+
+```
+POST /webhooks/payment
+Content-Type: application/json
+x-webhook-signature: <hex from step 4>
+
+{"bookingId": "<your-bookingId>"}
+```
+
+Response: `{ "received": true }`
+
+The booking status changes to `CONFIRMED` and seats change to `BOOKED`.
 
 ## Development Tools
 
@@ -111,7 +182,8 @@ Evoria/
 │       │   ├── auth/           # Register + Login
 │       │   ├── event/          # Event CRUD
 │       │   ├── show/           # Show + Seat creation
-│       │   └── organizer/      # Organizer profile
+│       │   ├── organizer/      # Organizer profile
+│       │   └── booking/        # Booking, seat hold, payment webhook
 │       └── shared/
 │           ├── database/       # Prisma client connection
 │           └── middleware/     # JWT authentication
