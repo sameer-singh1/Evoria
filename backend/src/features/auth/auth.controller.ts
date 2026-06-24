@@ -14,4 +14,15 @@ export class AuthController {
       res.status(409).json({ error: { message: "Email already registered" } });
     }
   }
+
+  async login(req: Request, res: Response) {
+    const { email, password } = req.body;
+
+    try {
+      const token = await this.service.login(email, password);
+      res.json({ token });
+    } catch (error) {
+      res.status(401).json({ error: { message: "Invalid credentials" } });
+    }
+  }
 }

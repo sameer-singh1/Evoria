@@ -28,6 +28,21 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   events       Event[]
+  organizerProfile OrganizerProfile?
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model OrganizerProfile {
+  id               String         @id @default(uuid())
+  user             User           @relation(fields: [userId], references: [id])
+  userId           String         @unique
+  approvalStatus   ApprovalStatus @default(PENDING)
+  organizationName String
 }
 
 enum Category {
@@ -50,4 +65,40 @@ model Event {
   published   Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  shows       Show[]
+}
+
+
+model Venue {
+  id      String @id @default(uuid())
+  name    String
+  city    String
+  address String
+  shows   Show[]
+}
+
+model Show {
+  id        String   @id @default(uuid())
+  event     Event    @relation(fields: [eventId], references: [id])
+  eventId   String
+  venue     Venue    @relation(fields: [venueId], references: [id])
+  venueId   String
+  startsAt  DateTime
+  seats     Seat[]
+}
+
+enum SeatStatus {
+  AVAILABLE
+  HELD
+  BOOKED
+}
+
+model Seat {
+  id            String     @id @default(uuid())
+  show          Show       @relation(fields: [showId], references: [id])
+  showId        String
+  label         String
+  price         Decimal    @db.Decimal(10, 2)
+  status        SeatStatus @default(AVAILABLE)
+  holdExpiresAt DateTime?
 }
