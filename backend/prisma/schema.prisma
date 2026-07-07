@@ -95,6 +95,12 @@ enum BookingStatus {
   CANCELLED
 }
 
+enum TicketStatus {
+  VALID
+  USED
+  CANCELLED
+}
+
 enum SeatStatus {
   AVAILABLE
   HELD
@@ -111,6 +117,17 @@ model Booking {
   totalPrice Decimal       @db.Decimal(10, 2)
   createdAt  DateTime      @default(now())
   seats      Seat[]
+  tickets    Ticket[]
+}
+
+model Ticket {
+  id        String       @id @default(uuid())
+  booking   Booking      @relation(fields: [bookingId], references: [id])
+  bookingId String
+  seat      Seat         @relation(fields: [seatId], references: [id])
+  seatId    String       @unique
+  status    TicketStatus @default(VALID)
+  createdAt DateTime     @default(now())
 }
 
 model Seat {
@@ -123,4 +140,5 @@ model Seat {
   holdExpiresAt DateTime?
   booking       Booking?   @relation(fields: [bookingId], references: [id])
   bookingId     String?
+  ticket        Ticket?
 }

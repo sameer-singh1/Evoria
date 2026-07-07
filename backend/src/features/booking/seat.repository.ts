@@ -5,6 +5,10 @@ export class SeatRepository {
     return prisma.seat.findMany({ where: { id: { in: seatIds } } });
   }
 
+  async findByBookingId(bookingId: string) {
+    return prisma.seat.findMany({ where: { bookingId } });
+  }
+
   async bookSeats(bookingId: string) {
     await prisma.seat.updateMany({
       where: { bookingId },

@@ -7,7 +7,38 @@ export class EventService {
   private organizerRepository = new OrganizerRepository();
 
   async listPublishedEvents() {
-    return this.repository.findPublished();
+    const events = await this.repository.findPublished();
+
+    return events.map((event) => {
+      const show = event.shows[0];
+
+      return {
+        id: event.id,
+        title: event.title,
+        category: event.category,
+        description: event.description,
+        mediaRef: event.mediaRef,
+        nextShowDate: show?.startsAt ?? null,
+        venueCity: show?.venue.city ?? null,
+        startingPrice: show?.seats[0] ? Number(show.seats[0].price) : null,
+      };
+    });
+  }
+
+  async getEventById(eventId: string) {
+    const event = await this.repository.findPublishedById(eventId);
+
+    if (!event) {
+      throw new Error("Event not found");
+    }
+
+    return {
+      id: event.id,
+      title: event.title,
+      category: event.category,
+      description: event.description,
+      mediaRef: event.mediaRef,
+    };
   }
 
   async createEvent(organizerId: string, title: string, category: Category, description?: string, mediaRef?: string) {

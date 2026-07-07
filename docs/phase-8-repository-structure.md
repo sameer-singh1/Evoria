@@ -82,11 +82,13 @@ evoria/
 ├── frontend/
 │   └── src/
 │       ├── features/
+│       │   ├── auth/
+│       │   │   ├── pages/
+│       │   │   └── hooks/
 │       │   ├── booking/
 │       │   │   ├── components/
 │       │   │   ├── pages/
-│       │   │   ├── hooks/
-│       │   │   └── store/
+│       │   │   └── hooks/
 │       │   ├── event/
 │       │   │   ├── components/
 │       │   │   ├── pages/
@@ -95,10 +97,12 @@ evoria/
 │       │       ├── components/
 │       │       ├── pages/
 │       │       └── hooks/
-│       └── shared/
-│           ├── components/
-│           ├── api/
-│           └── hooks/
+│       ├── shared/
+│       │   ├── components/
+│       │   ├── store/
+│       │   └── hooks/
+│       └── lib/
+│           └── api.ts
 └── docs/
 ```
 
@@ -146,23 +150,31 @@ Each feature folder contains:
 | `components/` | Presentational UI pieces specific to this feature |
 | `pages/` | Route-level components (React Router) |
 | `hooks/` | TanStack Query hooks — **server state** |
-| `store/` | Zustand slices — **client-only state** |
+
+Revised 2026-07-02: Zustand `store/` slices are no longer nested per-feature. In
+practice most client-only state (starting with auth session state) is cross-cutting
+enough to want one predictable location — see 6.3.
 
 ### 6.2 Server State vs. Client State
 
-| | TanStack Query (`hooks/`) | Zustand (`store/`) |
+| | TanStack Query (`hooks/`) | Zustand (`shared/store/`) |
 |---|---|---|
-| **Manages** | Data that lives on the Backend (Shows, seat availability) | Data that exists only in the browser (currently-selected seats before submission) |
+| **Manages** | Data that lives on the Backend (Shows, seat availability) | Data that exists only in the browser (auth session, currently-selected seats before submission) |
 | **Needs** | Fetching, caching, invalidation, refetch-on-stale | Simple, synchronous local state |
 | **Risk if conflated** | Manually reimplementing caching/staleness logic Query already solves | Server data duplicated across two sources, drifting out of sync |
 
-### 6.3 `shared/` (Frontend)
+### 6.3 `shared/` and `lib/` (Frontend)
 
 | Folder | Purpose |
 |---|---|
-| `components/` | Generic, feature-agnostic UI primitives (Button, Modal) |
-| `api/` | The HTTP client — attaches the JWT Access Token (Phase 6, §3) to every request |
-| `hooks/` | Cross-feature reusable hooks |
+| `shared/components/` | Generic, feature-agnostic UI primitives (Button, Modal) |
+| `shared/store/` | Zustand slices — **client-only state**, one flat location rather than duplicated per-feature (e.g. `authStore.ts`) |
+| `shared/hooks/` | Cross-feature reusable hooks |
+| `lib/api.ts` | The HTTP client (axios) — attaches the JWT Access Token (Phase 6, §3) to every request via an interceptor reading `shared/store/authStore` |
+
+`lib/` is kept separate from `shared/` for infrastructure/client wrappers (the API
+client, and future third-party SDK wrappers) as opposed to `shared/`, which holds
+reusable application code (components, hooks, state).
 
 ---
 

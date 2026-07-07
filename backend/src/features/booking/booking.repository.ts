@@ -13,6 +13,17 @@ export class BookingRepository {
     return prisma.booking.findUnique({ where: { id: bookingId } });
   }
 
+  async findByIdWithDetails(bookingId: string) {
+    return prisma.booking.findUnique({
+      where: { id: bookingId },
+      include: {
+        seats: { select: { id: true, label: true, price: true, status: true } },
+        tickets: { select: { id: true, seatId: true, status: true } },
+        show: { include: { event: true, venue: true } },
+      },
+    });
+  }
+
   async confirm(bookingId: string) {
     await prisma.booking.update({ where: { id: bookingId }, data: { status: "CONFIRMED" } });
   }

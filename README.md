@@ -8,7 +8,7 @@ A production-grade event ticketing platform — think BookMyShow or District. At
 **Database:** MySQL (via Docker), Prisma ORM  
 **Auth:** JWT (access token) + bcrypt  
 
-**Frontend (planned):** React, TypeScript, Vite, TanStack Query, Zustand  
+**Frontend:** React 19, TypeScript, Vite, React Router, TanStack Query (server state), Zustand (client state), Tailwind CSS v4  
 **Infrastructure (planned):** Redis, RabbitMQ, AWS S3, Docker, Kubernetes, AWS
 
 ## Prerequisites
@@ -75,6 +75,23 @@ node dist/index.js
 
 The server starts on `http://localhost:3000`.
 
+## Frontend Setup
+
+### 1. Install dependencies
+
+```bash
+cd frontend
+npm install
+```
+
+### 2. Run the dev server
+
+```bash
+npm run dev
+```
+
+The app starts on `http://localhost:5173`. The backend must already be running on `http://localhost:3000` — the backend's CORS config only allows requests from this exact origin.
+
 ## API Endpoints
 
 | Method | Path | Auth | Description |
@@ -83,12 +100,29 @@ The server starts on `http://localhost:3000`.
 | POST | `/auth/register` | None | Register a new user |
 | POST | `/auth/login` | None | Login and receive JWT |
 | GET | `/events` | None | List all published events |
+| GET | `/events/:eventId` | None | Get a single published event's details |
 | POST | `/events` | Bearer token (Organizer) | Create a new event |
-| GET | `/events/:eventId/shows` | None | List shows for an event |
+| GET | `/events/:eventId/shows` | None | List shows for an event (with venue + starting price) |
 | POST | `/events/:eventId/shows` | Bearer token (Organizer) | Create a show with seats |
 | GET | `/shows/:showId/seats` | None | List all seats for a show |
+| POST | `/organizer/apply` | Bearer token | Apply for organizer approval |
 | POST | `/bookings` | Bearer token (Attendee) | Hold seats and create a booking |
+| GET | `/bookings/:id` | Bearer token (Owner) | Get booking details with seats and tickets |
 | POST | `/webhooks/payment` | HMAC signature | Confirm payment and finalize booking |
+
+## Frontend Pages
+
+| Route | Page | Status |
+|-------|------|--------|
+| `/login` | Login | Built |
+| `/register` | Register | Built |
+| `/` | Browse events | Built |
+| `/events/:eventId` | Event detail — pick a show | Built |
+| `/events/:eventId/shows/:showId/seats` | Seat selection | Built |
+| `/bookings/:id` | Booking confirmation | Built |
+| — | Apply to become an organizer | Stub component only, not routed |
+| — | Create event | Stub component only, not routed |
+| — | Create show | Stub component only, not routed |
 
 ## Testing the Payment Flow
 
@@ -176,18 +210,38 @@ Evoria/
 ├── backend/
 │   ├── prisma/
 │   │   ├── schema.prisma       # Database models
-│   │   └── migrations/         # Migration history
+│   │   ├── migrations/         # Migration history
+│   │   └── seed.js             # Sample data (venues, events, shows, seats)
 │   └── src/
 │       ├── features/
 │       │   ├── auth/           # Register + Login
 │       │   ├── event/          # Event CRUD
 │       │   ├── show/           # Show + Seat creation
 │       │   ├── organizer/      # Organizer profile
-│       │   └── booking/        # Booking, seat hold, payment webhook
+│       │   └── booking/        # Booking, seat hold, ticket issuance, payment webhook
 │       └── shared/
 │           ├── database/       # Prisma client connection
 │           └── middleware/     # JWT authentication
+├── frontend/
+│   └── src/
+│       ├── features/
+│       │   ├── auth/           # Login, Register (pages + hooks)
+│       │   ├── event/          # Browse events, event detail (pages + hooks)
+│       │   ├── show/           # Seat selection (page + hook)
+│       │   ├── booking/        # Booking confirmation (page + hooks)
+│       │   └── organizer/      # Organizer pages (stubs, not yet wired)
+│       ├── shared/
+│       │   └── store/          # Zustand stores (auth session)
+│       └── lib/
+│           └── api.ts          # Shared fetch wrapper (base URL, auth header, error handling)
 ├── docs/                       # Architecture and design docs
 └── .vscode/
     └── launch.json             # Debugger config
 ```
+
+## Known Limitations
+
+- **No token refresh.** JWTs expire after 15 minutes with no renewal mechanism — an expired session fails with `401 Invalid or expired token` on the next protected request, requiring a manual re-login.
+- **No automatic seat-hold expiry.** A `HELD` seat's `holdExpiresAt` is stored but nothing currently sweeps expired holds back to `AVAILABLE`.
+- **Organizer-side pages aren't built.** Applying as an organizer, creating events, and creating shows all have working backend endpoints but only stub frontend components with no routes.
+- **No real payment gateway.** See "Testing the Payment Flow" above — the webhook must be triggered manually.

@@ -22,4 +22,21 @@ export class BookingService {
 
     return booking;
   }
+
+  async getBooking(bookingId: string, userId: string) {
+    const booking = await this.bookingRepository.findByIdWithDetails(bookingId);
+    if (!booking) throw new Error("Booking not found");
+    if (booking.userId !== userId) throw new Error("Forbidden");
+
+    return {
+      id: booking.id,
+      status: booking.status,
+      totalPrice: Number(booking.totalPrice),
+      eventTitle: booking.show.event.title,
+      showStartsAt: booking.show.startsAt,
+      venueName: booking.show.venue.name,
+      venueCity: booking.show.venue.city,
+      seats: booking.seats.map((seat) => ({ id: seat.id, label: seat.label, price: Number(seat.price) })),
+    };
+  }
 }

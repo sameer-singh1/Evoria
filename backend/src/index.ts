@@ -1,34 +1,42 @@
 import express from "express";
+import cors from "cors";
 import { EventController } from "./features/event/event.controller";
 import { AuthController } from "./features/auth/auth.controller";
 import { ShowController } from "./features/show/show.controller";
 import { BookingController } from "./features/booking/booking.controller";
 import { PaymentWebhookController } from "./features/booking/payment-webhook.controller";
+import { OrganizerController } from "./features/organizer/organizer.controller";
 import { authenticate } from "./shared/middleware/authenticate";
 
 const app = express();
+app.use(cors({ origin: "http://localhost:5173" }));
+app.options(/(.*)/, cors({ origin: "http://localhost:5173" }));
 const PORT = 3000;
 const eventController = new EventController();
 const authController = new AuthController();
 const showController = new ShowController();
 const bookingController = new BookingController();
 const paymentWebhookController = new PaymentWebhookController();
+const organizerController = new OrganizerController();
 
 app.post("/webhooks/payment", express.text({ type: "application/json" }), (req, res) => paymentWebhookController.handle(req, res));
 
 app.use(express.json());
 
-app.get("/health", (req, res) => {
+app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
 });
 
 app.get("/events", (req, res) => eventController.listEvents(req, res));
+app.get("/events/:eventId", (req, res) => eventController.getEvent(req, res));
 
 app.post("/events", authenticate, (req, res) => eventController.createEvent(req, res));
 app.get("/events/:eventId/shows", (req, res) => showController.listShows(req, res));
 app.get("/shows/:showId/seats", (req, res) => showController.listSeats(req, res));
 app.post("/bookings", authenticate, (req, res) => bookingController.createBooking(req, res));
+app.get("/bookings/:id", authenticate, (req, res) => bookingController.getBooking(req, res));
 app.post("/events/:eventId/shows", authenticate, (req, res) => showController.createShow(req, res));
+app.post("/organizer/apply", authenticate, (req, res) => organizerController.apply(req, res));
 
 app.post("/auth/register", (req, res) => authController.register(req, res));
 

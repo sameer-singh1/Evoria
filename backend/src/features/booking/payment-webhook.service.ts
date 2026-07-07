@@ -1,6 +1,7 @@
 import * as crypto from "crypto";
 import { BookingRepository } from "./booking.repository";
 import { SeatRepository } from "./seat.repository";
+import { TicketRepository } from "./ticket.repository";
 
 const WEBHOOK_SECRET = process.env.PAYMENT_WEBHOOK_SECRET;
 if (!WEBHOOK_SECRET) {
@@ -10,6 +11,7 @@ if (!WEBHOOK_SECRET) {
 export class PaymentWebhookService {
   private bookingRepository = new BookingRepository();
   private seatRepository = new SeatRepository();
+  private ticketRepository = new TicketRepository();
 
   async processPayment(signature: string, rawBody: string, bookingId: string) {
     const expected = crypto.createHmac("sha256", WEBHOOK_SECRET!).update(rawBody).digest("hex");
@@ -27,5 +29,7 @@ export class PaymentWebhookService {
 
     await this.bookingRepository.confirm(bookingId);
     await this.seatRepository.bookSeats(bookingId);
+    const seats = await this.seatRepository.findByBookingId(bookingId);
+    await this.ticketRepository.createMany(bookingId, seats.map((s) => s.id));
   }
 }

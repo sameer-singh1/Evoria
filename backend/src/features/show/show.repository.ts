@@ -6,7 +6,18 @@ export class ShowRepository {
   }
 
   async findByEventId(eventId: string) {
-    return prisma.show.findMany({ where: { eventId } });
+    return prisma.show.findMany({
+      where: { eventId },
+      orderBy: { startsAt: "asc" },
+      include: {
+        venue: true,
+        seats: {
+          where: { status: "AVAILABLE" },
+          orderBy: { price: "asc" },
+          take: 1,
+        },
+      },
+    });
   }
 
   async createWithSeats(data: {

@@ -16,7 +16,6 @@ declare global {
 
 export function authenticate(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
-  console.log(req.headers)
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     res.status(401).json({ error: { message: "No token provided" } });

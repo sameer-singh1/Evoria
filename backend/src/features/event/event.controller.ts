@@ -9,6 +9,17 @@ export class EventController {
     res.json({ data: events });
   }
 
+  async getEvent(req: Request, res: Response) {
+    const eventId = req.params.eventId as string;
+
+    try {
+      const event = await this.service.getEventById(eventId);
+      res.json(event);
+    } catch (error) {
+      res.status(404).json({ error: { message: "Event not found" } });
+    }
+  }
+
   async createEvent(req: Request, res: Response) {
     const { title, category, description, mediaRef } = req.body;
     const organizerId = req.user!.userId;
