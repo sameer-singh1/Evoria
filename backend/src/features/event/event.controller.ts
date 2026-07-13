@@ -20,6 +20,12 @@ export class EventController {
     }
   }
 
+  async listMyEvents(req: Request, res: Response) {
+    const organizerId = req.user!.userId;
+    const events = await this.service.listOrganizerEvents(organizerId);
+    res.json({ data: events });
+  }
+
   async createEvent(req: Request, res: Response) {
     const { title, category, description, mediaRef } = req.body;
     const organizerId = req.user!.userId;
@@ -29,6 +35,24 @@ export class EventController {
       res.status(201).json({ id: event.id, published: event.published });
     } catch (error) {
       res.status(403).json({ error: { message: "Organizer not approved" } });
+    }
+  }
+
+  async publishEvent(req: Request, res: Response) {
+    const eventId = req.params.eventId as string;
+    const organizerId = req.user!.userId;
+
+    try {
+      const event = await this.service.publishEvent(organizerId, eventId);
+      res.json({ id: event.id, published: event.published });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to publish event";
+      const status =
+        message === "Event not found" ? 404 :
+        message === "Forbidden" ? 403 :
+        message === "Event must have at least one show before publishing" ? 409 :
+        500;
+      res.status(status).json({ error: { message } });
     }
   }
 }

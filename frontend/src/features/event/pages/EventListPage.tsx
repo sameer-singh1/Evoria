@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEvents, type Category } from "../hooks/useEvents";
 import { useAuthStore } from "../../../shared/store/authStore";
+import { UserMenu } from "../../../shared/components/UserMenu";
 
 type CategoryFilter = "ALL" | Category;
 
@@ -10,8 +11,6 @@ export function EventListPage() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>("ALL");
   const eventsQuery = useEvents();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const user = useAuthStore((state) => state.user);
-  const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
 
   const events = eventsQuery.data?.data ?? [];
@@ -48,35 +47,14 @@ export function EventListPage() {
     <div className="bg-white text-ink antialiased">
       {/* NAVBAR */}
       <header className="sticky top-0 z-20 border-b border-gray-200 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-brand to-brand-600 shadow-lg shadow-brand/40">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className="h-5 w-5 text-white">
-                <path d="M4 9a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2 1.5 1.5 0 0 0 0 3 1.5 1.5 0 0 0 0 3 2 2 0 0 1-2 2H6a2 2 0 0 1-2-2 1.5 1.5 0 0 0 0-3 1.5 1.5 0 0 0 0-3Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-                <path d="M12 9.1c.36 1.6 1.09 2.33 2.7 2.7-1.61.37-2.34 1.1-2.7 2.7-.36-1.6-1.09-2.33-2.7-2.7 1.61-.37 2.34-1.1 2.7-2.7Z" fill="currentColor" />
-              </svg>
-            </span>
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+          <Link to="/" className="flex items-center gap-2.5">
             <span className="font-display text-xl font-bold tracking-tight text-ink">Evoria<span className="text-brand">.</span></span>
-          </div>
-
-          <nav className="hidden items-center gap-8 text-sm font-medium text-gray-600 md:flex">
-            <a href="#" className="text-ink">Events</a>
-            <a href="#" className="hover:text-ink">Shows</a>
-            <a href="#" className="hover:text-ink">Cities</a>
-          </nav>
+          </Link>
 
           <div className="flex items-center gap-3">
-            {isAuthenticated && user ? (
-              <>
-                <span className="text-sm font-semibold text-gray-700">Hi, {user.name}</span>
-                <button
-                  type="button"
-                  onClick={logout}
-                  className="rounded-lg px-4 py-2 text-sm font-semibold text-gray-700 transition hover:text-ink"
-                >
-                  Logout
-                </button>
-              </>
+            {isAuthenticated ? (
+              <UserMenu />
             ) : (
               <>
                 <Link to="/login" className="rounded-lg px-4 py-2 text-sm font-semibold text-gray-700 transition hover:text-ink">Login</Link>
@@ -87,35 +65,35 @@ export function EventListPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-6 py-10">
+      <main className="mx-auto max-w-7xl px-6 py-6">
         {/* page heading + search */}
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <h1 className="font-display text-3xl font-extrabold tracking-tight text-ink">Browse events</h1>
-            <p className="mt-1.5 text-[15px] text-gray-500">{filteredEvents.length} events happening near you</p>
+            <h1 className="font-display text-2xl font-extrabold tracking-tight text-ink">Browse events</h1>
+            <p className="mt-1 text-[15px] text-gray-500">{filteredEvents.length} events happening near you</p>
           </div>
 
-          <div className="focus-ring flex w-full items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 md:w-96">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className="h-5 w-5 shrink-0 text-gray-400">
+          <div className="focus-ring flex w-full items-center gap-2.5 rounded-lg border border-gray-200 bg-white px-3.5 md:w-72">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className="h-4 w-4 shrink-0 text-gray-400">
               <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="1.7" />
               <path d="m20 20-3.8-3.8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
             </svg>
             <input
               type="text"
               placeholder="Search events, artists, venues..."
-              className="w-full bg-transparent py-3 text-[15px] text-ink placeholder:text-gray-400 focus:outline-none"
+              className="w-full bg-transparent py-2 text-sm text-ink placeholder:text-gray-400 focus:outline-none"
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
             />
           </div>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[240px_1fr]">
+        <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-[220px_1fr]">
           {/* SIDEBAR FILTERS */}
           <aside className="lg:sticky lg:top-24 lg:self-start">
-            <div className="rounded-lg border border-gray-200 p-5">
+            <div className="rounded-lg border border-gray-200 p-4">
               <h3 className="font-display text-base font-bold tracking-tight text-ink">Category</h3>
-              <div className="mt-4 space-y-3">
+              <div className="mt-3 space-y-2.5">
                 {categoryOptions.map((option) => (
                   <label key={option.value} className="flex cursor-pointer items-center gap-3">
                     <input
@@ -140,7 +118,7 @@ export function EventListPage() {
           {filteredEvents.length === 0 ? (
             <p className="text-[15px] text-gray-500">No events found.</p>
           ) : (
-            <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
               {filteredEvents.map((event) => (
                 <div
                   key={event.id}
@@ -160,9 +138,9 @@ export function EventListPage() {
                       </span>
                     </div>
                   </Link>
-                  <div className="p-4">
+                  <div className="p-3.5">
                     <Link to={`/events/${event.id}`} className="block">
-                      <h3 className="font-display text-lg font-bold tracking-tight text-ink">{event.title}</h3>
+                      <h3 className="font-display text-base font-bold tracking-tight text-ink">{event.title}</h3>
 
                       {event.nextShowDate ? (
                         <>
@@ -184,7 +162,7 @@ export function EventListPage() {
                       <div className="mt-4 flex items-center justify-between">
                         {event.startingPrice !== null ? (
                           <>
-                            <span className="font-display text-lg font-bold text-ink">${event.startingPrice}</span>
+                            <span className="font-display text-lg font-bold text-ink">₹{event.startingPrice}</span>
                             <button
                               type="button"
                               onClick={() => navigate(isAuthenticated ? `/events/${event.id}` : "/login")}

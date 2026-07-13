@@ -39,4 +39,19 @@ export class BookingService {
       seats: booking.seats.map((seat) => ({ id: seat.id, label: seat.label, price: Number(seat.price) })),
     };
   }
+
+  async listMyBookings(userId: string) {
+    const bookings = await this.bookingRepository.findByUserId(userId);
+
+    return bookings.map((booking) => ({
+      id: booking.id,
+      status: booking.status,
+      totalPrice: Number(booking.totalPrice),
+      eventTitle: booking.show.event.title,
+      showStartsAt: booking.show.startsAt,
+      venueName: booking.show.venue.name,
+      venueCity: booking.show.venue.city,
+      seatCount: booking.seats.length,
+    }));
+  }
 }

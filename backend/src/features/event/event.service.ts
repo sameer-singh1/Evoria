@@ -50,4 +50,35 @@ export class EventService {
 
     return this.repository.create({ organizerId, title, category, description, mediaRef });
   }
+
+  async publishEvent(organizerId: string, eventId: string) {
+    const event = await this.repository.findByIdWithShowCount(eventId);
+
+    if (!event) {
+      throw new Error("Event not found");
+    }
+
+    if (event.organizerId !== organizerId) {
+      throw new Error("Forbidden");
+    }
+
+    if (event._count.shows === 0) {
+      throw new Error("Event must have at least one show before publishing");
+    }
+
+    return this.repository.publish(eventId);
+  }
+
+  async listOrganizerEvents(organizerId: string) {
+    const events = await this.repository.findByOrganizerId(organizerId);
+
+    return events.map((event) => ({
+      id: event.id,
+      title: event.title,
+      category: event.category,
+      published: event.published,
+      showCount: event._count.shows,
+      createdAt: event.createdAt,
+    }));
+  }
 }

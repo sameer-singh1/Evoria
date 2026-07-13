@@ -27,4 +27,15 @@ export class BookingRepository {
   async confirm(bookingId: string) {
     await prisma.booking.update({ where: { id: bookingId }, data: { status: "CONFIRMED" } });
   }
+
+  async findByUserId(userId: string) {
+    return prisma.booking.findMany({
+      where: { userId },
+      orderBy: { createdAt: "desc" },
+      include: {
+        seats: { select: { id: true } },
+        show: { include: { event: true, venue: true } },
+      },
+    });
+  }
 }

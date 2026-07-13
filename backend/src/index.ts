@@ -6,6 +6,7 @@ import { ShowController } from "./features/show/show.controller";
 import { BookingController } from "./features/booking/booking.controller";
 import { PaymentWebhookController } from "./features/booking/payment-webhook.controller";
 import { OrganizerController } from "./features/organizer/organizer.controller";
+import { VenueController } from "./features/venue/venue.controller";
 import { authenticate } from "./shared/middleware/authenticate";
 
 const app = express();
@@ -18,6 +19,7 @@ const showController = new ShowController();
 const bookingController = new BookingController();
 const paymentWebhookController = new PaymentWebhookController();
 const organizerController = new OrganizerController();
+const venueController = new VenueController();
 
 app.post("/webhooks/payment", express.text({ type: "application/json" }), (req, res) => paymentWebhookController.handle(req, res));
 
@@ -30,13 +32,19 @@ app.get("/health", (_req, res) => {
 app.get("/events", (req, res) => eventController.listEvents(req, res));
 app.get("/events/:eventId", (req, res) => eventController.getEvent(req, res));
 
+app.get("/organizer/events", authenticate, (req, res) => eventController.listMyEvents(req, res));
 app.post("/events", authenticate, (req, res) => eventController.createEvent(req, res));
+app.patch("/events/:eventId/publish", authenticate, (req, res) => eventController.publishEvent(req, res));
 app.get("/events/:eventId/shows", (req, res) => showController.listShows(req, res));
 app.get("/shows/:showId/seats", (req, res) => showController.listSeats(req, res));
 app.post("/bookings", authenticate, (req, res) => bookingController.createBooking(req, res));
+app.get("/bookings", authenticate, (req, res) => bookingController.listMyBookings(req, res));
 app.get("/bookings/:id", authenticate, (req, res) => bookingController.getBooking(req, res));
 app.post("/events/:eventId/shows", authenticate, (req, res) => showController.createShow(req, res));
+app.get("/organizer/me", authenticate, (req, res) => organizerController.me(req, res));
 app.post("/organizer/apply", authenticate, (req, res) => organizerController.apply(req, res));
+app.get("/venues", (req, res) => venueController.listVenues(req, res));
+app.post("/venues", authenticate, (req, res) => venueController.createVenue(req, res));
 
 app.post("/auth/register", (req, res) => authController.register(req, res));
 

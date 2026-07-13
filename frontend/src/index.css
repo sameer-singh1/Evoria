@@ -4,6 +4,8 @@
   --color-ink: #030712;
   --color-brand: #f97316;
   --color-brand-600: #ea580c;
+  --radius-lg: 0.375rem;
+  --radius-md: 0.3125rem;
 }
 
 body {
@@ -60,7 +62,7 @@ body {
 .seat {
   width: 30px;
   height: 30px;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 10px;
   font-weight: 600;
   display: flex;

@@ -31,7 +31,26 @@ export class EventRepository {
     return prisma.event.findUnique({ where: { id } });
   }
 
+  async findByIdWithShowCount(id: string) {
+    return prisma.event.findUnique({
+      where: { id },
+      include: { _count: { select: { shows: true } } },
+    });
+  }
+
+  async publish(id: string) {
+    return prisma.event.update({ where: { id }, data: { published: true } });
+  }
+
   async findPublishedById(id: string) {
     return prisma.event.findFirst({ where: { id, published: true } });
+  }
+
+  async findByOrganizerId(organizerId: string) {
+    return prisma.event.findMany({
+      where: { organizerId },
+      orderBy: { createdAt: "desc" },
+      include: { _count: { select: { shows: true } } },
+    });
   }
 }

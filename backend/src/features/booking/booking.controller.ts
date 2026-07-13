@@ -4,6 +4,12 @@ import { BookingService } from "./booking.service";
 export class BookingController {
   private service = new BookingService();
 
+  async listMyBookings(req: Request, res: Response) {
+    const userId = req.user!.userId;
+    const bookings = await this.service.listMyBookings(userId);
+    res.json({ data: bookings });
+  }
+
   async getBooking(req: Request, res: Response) {
     const bookingId = req.params.id as string;
     const userId = req.user!.userId;

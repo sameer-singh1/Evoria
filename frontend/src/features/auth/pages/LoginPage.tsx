@@ -39,12 +39,6 @@ export function LoginPage() {
         <div className="relative hidden lg:flex flex-col justify-between px-14 py-12 text-white">
           {/* logo */}
           <div className="relative flex items-center gap-3">
-            <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-brand to-brand-600 shadow-lg shadow-brand/40 ring-1 ring-white/25">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className="h-6 w-6 text-white">
-                <path d="M4 9a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2 1.5 1.5 0 0 0 0 3 1.5 1.5 0 0 0 0 3 2 2 0 0 1-2 2H6a2 2 0 0 1-2-2 1.5 1.5 0 0 0 0-3 1.5 1.5 0 0 0 0-3Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-                <path d="M12 9.1c.36 1.6 1.09 2.33 2.7 2.7-1.61.37-2.34 1.1-2.7 2.7-.36-1.6-1.09-2.33-2.7-2.7 1.61-.37 2.34-1.1 2.7-2.7Z" fill="currentColor" />
-              </svg>
-            </span>
             <span className="font-display text-[26px] font-bold tracking-tight">Evoria<span className="text-brand">.</span></span>
           </div>
 
@@ -76,22 +70,16 @@ export function LoginPage() {
 
         {/* RIGHT: form panel */}
         <div className="flex items-center justify-center px-6 py-12 sm:px-12">
-          <div className="w-full max-w-sm rounded-lg border border-white/20 bg-white/10 p-6 shadow-2xl backdrop-blur-xl sm:p-8">
+          <div className="w-full max-w-sm rounded-lg border border-white/20 bg-white/10 p-5 shadow-2xl backdrop-blur-xl sm:p-6">
             {/* mobile logo */}
-            <div className="mb-8 flex items-center gap-3 lg:hidden">
-              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-brand to-brand-600 shadow-lg shadow-brand/40 ring-1 ring-white/25">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className="h-5 w-5 text-white">
-                  <path d="M4 9a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2 1.5 1.5 0 0 0 0 3 1.5 1.5 0 0 0 0 3 2 2 0 0 1-2 2H6a2 2 0 0 1-2-2 1.5 1.5 0 0 0 0-3 1.5 1.5 0 0 0 0-3Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-                  <path d="M12 9.1c.36 1.6 1.09 2.33 2.7 2.7-1.61.37-2.34 1.1-2.7 2.7-.36-1.6-1.09-2.33-2.7-2.7 1.61-.37 2.34-1.1 2.7-2.7Z" fill="currentColor" />
-                </svg>
-              </span>
+            <div className="mb-5 flex items-center gap-3 lg:hidden">
               <span className="font-display text-xl font-bold tracking-tight text-white">Evoria<span className="text-brand">.</span></span>
             </div>
 
             <h2 className="font-display text-2xl font-extrabold tracking-tight text-white">Welcome back</h2>
             <p className="mt-1.5 text-sm text-gray-300">Sign in to your account to continue booking.</p>
 
-            <form className="mt-7 space-y-4" onSubmit={handleSubmit}>
+            <form className="mt-5 space-y-3.5" onSubmit={handleSubmit}>
               {/* email */}
               <div>
                 <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-gray-200">Email address</label>
