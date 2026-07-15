@@ -4,6 +4,11 @@ import { useSeats, type Seat } from "../hooks/useSeats";
 import { useEventDetail } from "../../event/hooks/useEventDetail";
 import { useShows } from "../../event/hooks/useShows";
 import { useCreateBooking } from "../../booking/hooks/useCreateBooking";
+import { useInitiatePayment } from "../../booking/hooks/useInitiatePayment";
+import { useVerifyPayment } from "../../booking/hooks/useVerifyPayment";
+import { useCancelBooking } from "../../booking/hooks/useCancelBooking";
+import { useHoldSeat } from "../hooks/useHoldSeat";
+import { useReleaseSeat } from "../hooks/useReleaseSeat";
 
 function groupSeatsByRow(seats: Seat[]) {
   const rows = new Map<string, Seat[]>();
@@ -36,9 +41,15 @@ export function SeatSelectionPage() {
   const showsQuery = useShows(eventId!);
   const seatsQuery = useSeats(showId!);
   const createBooking = useCreateBooking();
+  const initiatePayment = useInitiatePayment();
+  const verifyPayment = useVerifyPayment();
+  const cancelBooking = useCancelBooking();
+  const holdSeat = useHoldSeat();
+  const releaseSeat = useReleaseSeat();
   const navigate = useNavigate();
 
   const [selectedSeatIds, setSelectedSeatIds] = useState<Set<string>>(new Set());
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   const seats = seatsQuery.data?.data ?? [];
   const shows = showsQuery.data?.data ?? [];
@@ -49,16 +60,39 @@ export function SeatSelectionPage() {
   const totalPrice = selectedSeats.reduce((sum, seat) => sum + seat.price, 0);
 
   const toggleSeat = (seat: Seat) => {
-    if (seat.status !== "AVAILABLE") return;
-    setSelectedSeatIds((current) => {
-      const next = new Set(current);
-      if (next.has(seat.id)) {
+    if (seat.status !== "AVAILABLE" && !selectedSeatIds.has(seat.id)) return;
+    
+    const isCurrentlySelected = selectedSeatIds.has(seat.id);
+    
+    if (isCurrentlySelected) {
+      // Deselecting - remove from UI immediately, then try to release on backend
+      setSelectedSeatIds((current) => {
+        const next = new Set(current);
         next.delete(seat.id);
-      } else {
-        next.add(seat.id);
-      }
-      return next;
-    });
+        return next;
+      });
+      // Best-effort release — if seat was already released by a cancelled booking, that's fine
+      releaseSeat.mutate({ showId: showId!, seatId: seat.id });
+    } else {
+      // Selecting - hold the seat
+      holdSeat.mutate(
+        { showId: showId!, seatId: seat.id },
+        {
+          onSuccess: () => {
+            setSelectedSeatIds((current) => {
+              const next = new Set(current);
+              next.add(seat.id);
+              return next;
+            });
+          },
+          onError: (error) => {
+            alert(error.message === "Seat is no longer available" 
+              ? "This seat was just taken by another user" 
+              : "Failed to hold seat. Please try again.");
+          },
+        }
+      );
+    }
   };
 
   const handleBookNow = () => {
@@ -66,8 +100,79 @@ export function SeatSelectionPage() {
 
     createBooking.mutate(
       { showId, seatIds: Array.from(selectedSeatIds) },
-      { onSuccess: (data) => navigate(`/bookings/${data.id}`) },
+      { onSuccess: (data) => {
+        initiatePayment.mutate(
+          { bookingId: data.id },
+          { 
+            onSuccess: (paymentData) => openRazorpayModal(paymentData, data.id),
+            onError: () => {
+              // Payment initiation failed, cancel the booking to release seats
+              cancelBooking.mutate({ bookingId: data.id });
+            }
+          }
+        );
+      }},
     );
+  };
+
+  const openRazorpayModal = (paymentData: { orderId: string; amount: number; currency: string; keyId: string }, bookingId: string) => {
+    setIsProcessingPayment(true);
+    
+    const options = {
+      key: paymentData.keyId,
+      amount: paymentData.amount * 100, // Convert to paise
+      currency: paymentData.currency,
+      name: "Evoria",
+      description: "Event Ticket Booking",
+      order_id: paymentData.orderId,
+      handler: function (response: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }) {
+        verifyPayment.mutate(
+          {
+            bookingId,
+            paymentId: response.razorpay_payment_id,
+            orderId: response.razorpay_order_id,
+            signature: response.razorpay_signature,
+          },
+          {
+            onSuccess: () => {
+              setIsProcessingPayment(false);
+              navigate(`/bookings/${bookingId}`);
+            },
+            onError: (error) => {
+              setIsProcessingPayment(false);
+              // Payment verification failed, cancel the booking to release seats
+              cancelBooking.mutate({ bookingId });
+              alert(`Payment verification failed: ${error.message}`);
+            },
+          }
+        );
+      },
+      prefill: {
+        name: "",
+        email: "",
+        contact: "",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+      modal: {
+        ondismiss: function () {
+          setIsProcessingPayment(false);
+          // User closed the modal without completing payment — release seats
+          cancelBooking.mutate({ bookingId });
+        },
+      },
+    };
+
+    const rzp = new (window as unknown as { Razorpay: new (options: unknown) => { open: () => void; on: (event: string, handler: (response: { error: { description: string } }) => void) => void } }).Razorpay(options);
+    rzp.open();
+    
+    rzp.on("payment.failed", function (response: { error: { description: string } }) {
+      setIsProcessingPayment(false);
+      // Payment failed, cancel the booking to release seats
+      cancelBooking.mutate({ bookingId });
+      alert(`Payment failed: ${response.error.description}`);
+    });
   };
 
   return (
@@ -120,7 +225,7 @@ export function SeatSelectionPage() {
                         <button
                           key={seat.id}
                           type="button"
-                          disabled={seat.status !== "AVAILABLE"}
+                          disabled={seat.status !== "AVAILABLE" && !selectedSeatIds.has(seat.id)}
                           onClick={() => toggleSeat(seat)}
                           className={`seat ${statusClass}`}
                         >
@@ -168,17 +273,19 @@ export function SeatSelectionPage() {
                 </div>
               </div>
 
-              {createBooking.isError && (
-                <p className="mt-3 text-sm font-medium text-red-500">{createBooking.error.message}</p>
+              {(createBooking.isError || initiatePayment.isError || verifyPayment.isError) && (
+                <p className="mt-3 text-sm font-medium text-red-500">
+                  {createBooking.error?.message || initiatePayment.error?.message || verifyPayment.error?.message}
+                </p>
               )}
 
               <button
                 type="button"
-                disabled={selectedSeatIds.size === 0 || createBooking.isPending}
+                disabled={selectedSeatIds.size === 0 || createBooking.isPending || initiatePayment.isPending || isProcessingPayment}
                 onClick={handleBookNow}
                 className="glow mt-5 w-full rounded-lg bg-brand py-3 text-[15px] font-semibold text-white transition hover:bg-brand-600 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:shadow-none"
               >
-                {createBooking.isPending ? "Booking..." : "Book now"}
+                {createBooking.isPending ? "Booking..." : initiatePayment.isPending ? "Initiating payment..." : isProcessingPayment ? "Processing payment..." : "Book now"}
               </button>
             </div>
           </aside>

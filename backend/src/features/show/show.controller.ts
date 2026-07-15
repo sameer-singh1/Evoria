@@ -30,4 +30,34 @@ export class ShowController {
       res.status(status).json({ error: { message } });
     }
   }
+
+  async holdSeat(req: Request, res: Response) {
+    const showId = req.params.showId as string;
+    const seatId = req.params.seatId as string;
+    const userId = req.user!.userId;
+
+    try {
+      const result = await this.service.holdSeat(showId, seatId, userId);
+      res.json(result);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to hold seat";
+      const status = message === "Seat not found" ? 404 : message === "Seat does not belong to this show" ? 400 : message === "Seat is no longer available" ? 409 : 500;
+      res.status(status).json({ error: { message } });
+    }
+  }
+
+  async releaseSeat(req: Request, res: Response) {
+    const showId = req.params.showId as string;
+    const seatId = req.params.seatId as string;
+    const userId = req.user!.userId;
+
+    try {
+      const result = await this.service.releaseSeat(showId, seatId, userId);
+      res.json(result);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to release seat";
+      const status = message === "Seat not found" ? 404 : message === "Seat does not belong to this show" ? 400 : message === "Seat is not held by you" ? 409 : 500;
+      res.status(status).json({ error: { message } });
+    }
+  }
 }

@@ -35,4 +35,8 @@ export class ShowRepository {
       },
     });
   }
+
+  async findSeatById(seatId: string) {
+    return prisma.seat.findUnique({ where: { id: seatId } });
+  }
 }

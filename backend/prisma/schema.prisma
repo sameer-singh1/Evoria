@@ -138,6 +138,7 @@ model Seat {
   price         Decimal    @db.Decimal(10, 2)
   status        SeatStatus @default(AVAILABLE)
   holdExpiresAt DateTime?
+  heldByUserId  String?
   booking       Booking?   @relation(fields: [bookingId], references: [id])
   bookingId     String?
   ticket        Ticket?

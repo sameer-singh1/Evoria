@@ -8,10 +8,12 @@ import { PaymentWebhookController } from "./features/booking/payment-webhook.con
 import { OrganizerController } from "./features/organizer/organizer.controller";
 import { VenueController } from "./features/venue/venue.controller";
 import { authenticate } from "./shared/middleware/authenticate";
+import { startHoldExpiryWorker } from "./shared/holdExpiryWorker";
 
 const app = express();
-app.use(cors({ origin: "http://localhost:5173" }));
-app.options(/(.*)/, cors({ origin: "http://localhost:5173" }));
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+app.use(cors({ origin: FRONTEND_URL }));
+app.options(/(.*)/, cors({ origin: FRONTEND_URL }));
 const PORT = 3000;
 const eventController = new EventController();
 const authController = new AuthController();
@@ -37,9 +39,14 @@ app.post("/events", authenticate, (req, res) => eventController.createEvent(req,
 app.patch("/events/:eventId/publish", authenticate, (req, res) => eventController.publishEvent(req, res));
 app.get("/events/:eventId/shows", (req, res) => showController.listShows(req, res));
 app.get("/shows/:showId/seats", (req, res) => showController.listSeats(req, res));
+app.post("/shows/:showId/seats/:seatId/hold", authenticate, (req, res) => showController.holdSeat(req, res));
+app.post("/shows/:showId/seats/:seatId/release", authenticate, (req, res) => showController.releaseSeat(req, res));
 app.post("/bookings", authenticate, (req, res) => bookingController.createBooking(req, res));
 app.get("/bookings", authenticate, (req, res) => bookingController.listMyBookings(req, res));
 app.get("/bookings/:id", authenticate, (req, res) => bookingController.getBooking(req, res));
+app.post("/bookings/:bookingId/payments", authenticate, (req, res) => bookingController.initiatePayment(req, res));
+app.post("/bookings/:bookingId/verify-payment", authenticate, (req, res) => bookingController.verifyPayment(req, res));
+app.post("/bookings/:bookingId/cancel", authenticate, (req, res) => bookingController.cancelBooking(req, res));
 app.post("/events/:eventId/shows", authenticate, (req, res) => showController.createShow(req, res));
 app.get("/organizer/me", authenticate, (req, res) => organizerController.me(req, res));
 app.post("/organizer/apply", authenticate, (req, res) => organizerController.apply(req, res));
@@ -52,4 +59,5 @@ app.post("/auth/login", (req, res) => authController.login(req, res));
 
 app.listen(PORT, () => {
   console.log(`Evoria backend running on port ${PORT}`);
+  startHoldExpiryWorker();
 });

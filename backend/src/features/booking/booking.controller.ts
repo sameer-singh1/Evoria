@@ -37,4 +37,48 @@ export class BookingController {
       res.status(status).json({ error: { message } });
     }
   }
+
+  async initiatePayment(req: Request, res: Response) {
+    const bookingId = req.params.bookingId as string;
+    const userId = req.user!.userId;
+
+    try {
+      const paymentDetails = await this.service.initiatePayment(bookingId, userId);
+      res.status(201).json(paymentDetails);
+    } catch (error) {
+      console.error("Payment initiation error:", error);
+      const message = error instanceof Error ? error.message : "Failed to initiate payment";
+      const status = message === "Booking not found" ? 404 : message === "Forbidden" ? 403 : 500;
+      res.status(status).json({ error: { message } });
+    }
+  }
+
+  async verifyPayment(req: Request, res: Response) {
+    const bookingId = req.params.bookingId as string;
+    const userId = req.user!.userId;
+    const { paymentId, orderId, signature } = req.body;
+
+    try {
+      const result = await this.service.verifyPayment(bookingId, userId, paymentId, orderId, signature);
+      res.json(result);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to verify payment";
+      const status = message === "Booking not found" ? 404 : message === "Forbidden" ? 403 : message === "Invalid payment signature" ? 400 : 500;
+      res.status(status).json({ error: { message } });
+    }
+  }
+
+  async cancelBooking(req: Request, res: Response) {
+    const bookingId = req.params.bookingId as string;
+    const userId = req.user!.userId;
+
+    try {
+      await this.service.cancelBooking(bookingId, userId);
+      res.json({ success: true });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to cancel booking";
+      const status = message === "Booking not found" ? 404 : message === "Forbidden" ? 403 : message === "Cannot cancel a confirmed booking" ? 409 : 500;
+      res.status(status).json({ error: { message } });
+    }
+  }
 }
