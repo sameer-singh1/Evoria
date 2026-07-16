@@ -8,20 +8,25 @@ export class BookingService {
   private seatRepository = new SeatRepository();
 
   async createBooking(userId: string, showId: string, seatIds: string[]) {
+    console.log(`[Booking] createBooking: userId=${userId}, showId=${showId}, seatIds=${seatIds.join(",")}`);
     const seats = await this.seatRepository.findByIds(seatIds);
     const totalPrice = seats.reduce((sum, seat) => sum + Number(seat.price), 0);
+    console.log(`[Booking] totalPrice=${totalPrice}, creating booking record...`);
     const booking = await this.bookingRepository.create({ userId, showId, totalPrice });
+    console.log(`[Booking] booking created: bookingId=${booking.id}`);
     const holdExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
     const claims = await Promise.all(
       seatIds.map((seatId) => this.seatRepository.claimSeat(seatId, booking.id, holdExpiresAt))
     );
 
     if (claims.some((claimed) => !claimed)) {
+      console.warn(`[Booking] seat claim failed for bookingId=${booking.id}, releasing and cancelling`);
       await this.seatRepository.releaseSeats(booking.id);
       await this.bookingRepository.cancel(booking.id);
       throw new Error("One or more seats are no longer available");
     }
 
+    console.log(`[Booking] all seats claimed successfully for bookingId=${booking.id}`);
     return booking;
   }
 
@@ -58,6 +63,7 @@ export class BookingService {
   }
 
   async cancelBooking(bookingId: string, userId: string) {
+    console.log(`[Booking] cancelBooking: bookingId=${bookingId}, userId=${userId}`);
     const booking = await this.bookingRepository.findById(bookingId);
     if (!booking) throw new Error("Booking not found");
     if (booking.userId !== userId) throw new Error("Forbidden");
@@ -65,15 +71,18 @@ export class BookingService {
 
     await this.seatRepository.releaseSeats(bookingId);
     await this.bookingRepository.cancel(bookingId);
+    console.log(`[Booking] booking cancelled and seats released: bookingId=${bookingId}`);
   }
 
   async initiatePayment(bookingId: string, userId: string) {
+    console.log(`[Payment] initiatePayment: bookingId=${bookingId}, userId=${userId}`);
     const booking = await this.bookingRepository.findById(bookingId);
     if (!booking) throw new Error("Booking not found");
     if (booking.userId !== userId) throw new Error("Forbidden");
     if (booking.status !== "PENDING") throw new Error("Booking is not in PENDING state");
 
     const amountInPaise = Math.round(Number(booking.totalPrice) * 100);
+    console.log(`[Payment] creating Razorpay order: amount=${amountInPaise} paise`);
 
     const order = await razorpay.orders.create({
       amount: amountInPaise,
@@ -81,6 +90,7 @@ export class BookingService {
       receipt: `booking_${bookingId.slice(0, 20)}`,
     });
 
+    console.log(`[Payment] Razorpay order created: orderId=${order.id}`);
     return {
       orderId: order.id,
       amount: Number(booking.totalPrice),
@@ -96,6 +106,7 @@ export class BookingService {
     orderId: string,
     signature: string
   ) {
+    console.log(`[Payment] verifyPayment: bookingId=${bookingId}, paymentId=${paymentId}, orderId=${orderId}`);
     const booking = await this.bookingRepository.findById(bookingId);
     if (!booking) throw new Error("Booking not found");
     if (booking.userId !== userId) throw new Error("Forbidden");
@@ -104,12 +115,15 @@ export class BookingService {
     const expectedSignature = crypto.createHmac("sha256", RAZORPAY_KEY_SECRET!).update(body).digest("hex");
 
     if (signature !== expectedSignature) {
+      console.error(`[Payment] signature mismatch for bookingId=${bookingId}`);
       throw new Error("Invalid payment signature");
     }
 
+    console.log(`[Payment] signature verified, confirming booking: bookingId=${bookingId}`);
     await this.bookingRepository.confirm(bookingId);
     await this.seatRepository.bookSeats(bookingId);
     const seats = await this.seatRepository.findByBookingId(bookingId);
+    console.log(`[Payment] booking confirmed: bookingId=${bookingId}, seats=${seats.length}`);
     
     return {
       id: booking.id,

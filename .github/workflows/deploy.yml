@@ -1,0 +1,260 @@
+name: Deploy Evoria
+
+# ─── Trigger ──────────────────────────────────────────────────────────────────
+# This pipeline runs automatically every time you push to the main branch.
+# Every git push = full deploy of backend + frontend.
+on:
+  push:
+    branches: [main]
+
+# ─── Permissions ──────────────────────────────────────────────────────────────
+# id-token: write  → allows GitHub to generate an OIDC token so we can
+#                    authenticate with AWS without storing long-lived keys
+# contents: read   → allows checking out your code
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # ── Step 1: Checkout ────────────────────────────────────────────────────
+      # Downloads your repository code onto the GitHub Actions runner machine
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ── Step 2: Configure AWS credentials (OIDC — no stored keys) ──────────
+      # This step exchanges the GitHub OIDC token for temporary AWS credentials.
+      # No AWS_ACCESS_KEY_ID or AWS_SECRET_ACCESS_KEY is stored anywhere.
+      # The credentials expire after the pipeline finishes.
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region:     ${{ secrets.AWS_REGION }}
+
+      # ── Step 3: Log in to Amazon ECR ────────────────────────────────────────
+      # ECR requires authentication before you can push images.
+      # This action fetches a temporary password from AWS and logs Docker in.
+      - name: Log in to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      # ── Step 4: Build and push Docker image ─────────────────────────────────
+      # Builds the backend Docker image using backend/Dockerfile (multi-stage).
+      # Tags it with both the git commit SHA (for traceability) and :latest.
+      # Pushes both tags to ECR.
+      #
+      # Why SHA tag?  If a deploy goes wrong, you can roll back to a previous
+      #               commit's exact image using its SHA.
+      # Why :latest?  The ECS task definition CDK created references :latest,
+      #               and the migration step below also pulls :latest.
+      - name: Build and push Docker image
+        id: build-image
+        working-directory: backend
+        run: |
+          IMAGE_URI="${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}"
+          LATEST_URI="${{ secrets.ECR_REPOSITORY }}:latest"
+
+          echo "Building image: $IMAGE_URI"
+          docker build -t "$IMAGE_URI" -t "$LATEST_URI" .
+
+          echo "Pushing $IMAGE_URI"
+          docker push "$IMAGE_URI"
+
+          echo "Pushing $LATEST_URI"
+          docker push "$LATEST_URI"
+
+          # Save the SHA-tagged URI for use in later steps
+          echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
+
+      # ── Step 5: Download and render updated task definition ─────────────────
+      # Downloads the current ECS task definition from AWS.
+      # Updates the container image to the SHA-tagged image we just pushed.
+      # Saves the updated definition to a local JSON file.
+      #
+      # This is important: we always deploy with the SHA-tagged image (not :latest)
+      # so each ECS revision is traceable to a specific git commit.
+      - name: Download current task definition
+        run: |
+          aws ecs describe-task-definition \
+            --task-definition evoria-backend \
+            --query taskDefinition \
+            > task-definition.json
+
+      - name: Render updated task definition with new image
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        id: render-task-def
+        with:
+          task-definition:  task-definition.json
+          container-name:   evoria-backend
+          image:            ${{ env.IMAGE_URI }}
+
+      # ── Step 6: Register the new task definition ─────────────────────────────
+      # Registers the updated task definition with ECS.
+      # This creates a new revision (e.g., evoria-backend:5).
+      # ECS keeps a full history of all revisions.
+      - name: Register new task definition
+        id: register-task-def
+        run: |
+          NEW_TASK_DEF_ARN=$(aws ecs register-task-definition \
+            --cli-input-json "file://${{ steps.render-task-def.outputs.task-definition }}" \
+            --query 'taskDefinition.taskDefinitionArn' \
+            --output text)
+
+          echo "Registered task definition: $NEW_TASK_DEF_ARN"
+          echo "TASK_DEF_ARN=$NEW_TASK_DEF_ARN" >> $GITHUB_ENV
+
+      # ── Step 7: Run Prisma migrations ───────────────────────────────────────
+      # Runs `prisma migrate deploy` as a one-off ECS task using the NEW
+      # task definition (same image as what we're deploying).
+      #
+      # Why run migrations BEFORE deploying the service?
+      #   If we deployed the service first and it needs new DB columns,
+      #   the new tasks would crash until the migration ran.
+      #   Running migrations first ensures the DB is ready before new code starts.
+      #
+      # The pipeline BLOCKS here until the migration task finishes.
+      # If the migration fails (non-zero exit code), the pipeline stops
+      # and the service is NOT updated — your current service keeps running safely.
+      - name: Run database migrations
+        run: |
+          echo "Starting migration task..."
+          TASK_ARN=$(aws ecs run-task \
+            --cluster evoria-cluster \
+            --task-definition "${{ env.TASK_DEF_ARN }}" \
+            --launch-type FARGATE \
+            --overrides '{
+              "containerOverrides": [{
+                "name": "evoria-backend",
+                "command": ["npx", "prisma", "migrate", "deploy"]
+              }]
+            }' \
+            --network-configuration "awsvpcConfiguration={
+              subnets=[${{ secrets.PRIVATE_SUBNET_ID }}],
+              securityGroups=[${{ secrets.FARGATE_SG_ID }}],
+              assignPublicIp=DISABLED
+            }" \
+            --query 'tasks[0].taskArn' \
+            --output text)
+
+          echo "Migration task ARN: $TASK_ARN"
+          echo "Waiting for migration to complete..."
+
+          aws ecs wait tasks-stopped \
+            --cluster evoria-cluster \
+            --tasks "$TASK_ARN"
+
+          # Check the exit code — fail the pipeline if migration failed
+          EXIT_CODE=$(aws ecs describe-tasks \
+            --cluster evoria-cluster \
+            --tasks "$TASK_ARN" \
+            --query 'tasks[0].containers[0].exitCode' \
+            --output text)
+
+          echo "Migration exit code: $EXIT_CODE"
+
+          if [ "$EXIT_CODE" != "0" ]; then
+            echo "ERROR: Migration failed with exit code $EXIT_CODE"
+            echo "The ECS service has NOT been updated. Your current deployment is still running."
+            exit 1
+          fi
+
+          echo "Migration completed successfully."
+
+      # ── Step 8: Deploy new task definition to ECS service ───────────────────
+      # Updates the ECS service to use the new task definition revision.
+      # ECS performs a rolling deployment:
+      #   1. Starts a new task with the new image
+      #   2. Waits for it to pass the ALB health check (/health → 200)
+      #   3. Stops the old task
+      # If the new task fails health checks, ECS keeps the old task running.
+      # The pipeline waits here until the deployment is stable.
+      - name: Deploy to ECS
+        run: |
+          echo "Updating ECS service to use: ${{ env.TASK_DEF_ARN }}"
+
+          aws ecs update-service \
+            --cluster evoria-cluster \
+            --service evoria-service \
+            --task-definition "${{ env.TASK_DEF_ARN }}" \
+            --output text > /dev/null
+
+          echo "Waiting for service to stabilize (rolling deploy)..."
+
+          aws ecs wait services-stable \
+            --cluster evoria-cluster \
+            --services evoria-service
+
+          echo "ECS service is stable. Backend deploy complete."
+
+      # ── Step 9: Build frontend ───────────────────────────────────────────────
+      # Runs `npm run build` (tsc + vite build) to produce frontend/dist/.
+      # VITE_API_URL is the API CloudFront HTTPS URL — this is what the
+      # browser uses to call the backend. Using HTTPS (not the raw ALB URL)
+      # prevents the mixed-content browser error.
+      - name: Build frontend
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+        env:
+          VITE_API_URL: ${{ secrets.API_CLOUDFRONT_URL }}
+
+      # ── Step 10: Sync frontend to S3 ────────────────────────────────────────
+      # Uploads the built React app to S3.
+      # --delete removes files from S3 that no longer exist in dist/
+      #
+      # Caching strategy:
+      #   /assets/* → immutable (hashed filenames, safe to cache forever)
+      #   index.html → no cache (must always fetch fresh so users get new deploys)
+      - name: Sync frontend to S3
+        run: |
+          # Upload all hashed assets (JS, CSS) with long-lived cache headers
+          aws s3 sync frontend/dist/ "s3://${{ secrets.S3_BUCKET }}" \
+            --delete \
+            --exclude "index.html" \
+            --cache-control "public,max-age=31536000,immutable"
+
+          # Upload index.html with no-cache so users always get the latest version
+          aws s3 cp frontend/dist/index.html "s3://${{ secrets.S3_BUCKET }}/index.html" \
+            --cache-control "no-cache,no-store,must-revalidate"
+
+          echo "Frontend uploaded to S3."
+
+      # ── Step 11: Invalidate CloudFront caches ───────────────────────────────
+      # After uploading new files to S3, CloudFront might still serve
+      # old cached versions. Invalidation tells CloudFront to forget
+      # its cached copies and fetch fresh files from S3/ALB.
+      #
+      # We invalidate both distributions:
+      #   Frontend: because we just uploaded new files to S3
+      #   API:      in case CloudFront cached anything (shouldn't, but safe)
+      - name: Invalidate Frontend CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ secrets.FRONTEND_CF_DIST_ID }}" \
+            --paths "/*" \
+            --output text > /dev/null
+          echo "Frontend CloudFront invalidated."
+
+      - name: Invalidate API CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ secrets.API_CF_DIST_ID }}" \
+            --paths "/*" \
+            --output text > /dev/null
+          echo "API CloudFront invalidated."
+
+      # ── Step 12: Summary ─────────────────────────────────────────────────────
+      - name: Deployment summary
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "  Evoria deployment complete!"
+          echo "  Image:    ${{ env.IMAGE_URI }}"
+          echo "  Task def: ${{ env.TASK_DEF_ARN }}"
+          echo "  Frontend: ${{ secrets.API_CLOUDFRONT_URL }}"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

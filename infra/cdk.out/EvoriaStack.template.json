@@ -1,0 +1,1968 @@
+{
+ "Description": "Evoria event ticketing platform — full AWS infrastructure",
+ "Resources": {
+  "EvoriaVpcEB3B02FF": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.0.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "EvoriaStack/EvoriaVpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/Resource"
+   }
+  },
+  "EvoriaVpcPublicSubnet1Subnet8EAB3F55": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "ap-south-1a",
+    "CidrBlock": "10.0.0.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "EvoriaStack/EvoriaVpc/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EvoriaVpcEB3B02FF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PublicSubnet1/Subnet"
+   }
+  },
+  "EvoriaVpcPublicSubnet1RouteTable7879CCAC": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "EvoriaStack/EvoriaVpc/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EvoriaVpcEB3B02FF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PublicSubnet1/RouteTable"
+   }
+  },
+  "EvoriaVpcPublicSubnet1RouteTableAssociation182DC141": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "EvoriaVpcPublicSubnet1RouteTable7879CCAC"
+    },
+    "SubnetId": {
+     "Ref": "EvoriaVpcPublicSubnet1Subnet8EAB3F55"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PublicSubnet1/RouteTableAssociation"
+   }
+  },
+  "EvoriaVpcPublicSubnet1DefaultRoute9008A0EB": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "EvoriaVpcIGW7D8B194A"
+    },
+    "RouteTableId": {
+     "Ref": "EvoriaVpcPublicSubnet1RouteTable7879CCAC"
+    }
+   },
+   "DependsOn": [
+    "EvoriaVpcVPCGWBAC8218E"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PublicSubnet1/DefaultRoute"
+   }
+  },
+  "EvoriaVpcPublicSubnet1EIP6F099CD4": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "EvoriaStack/EvoriaVpc/PublicSubnet1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PublicSubnet1/EIP"
+   }
+  },
+  "EvoriaVpcPublicSubnet1NATGateway54BBD4F9": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "EvoriaVpcPublicSubnet1EIP6F099CD4",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "EvoriaVpcPublicSubnet1Subnet8EAB3F55"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "EvoriaStack/EvoriaVpc/PublicSubnet1"
+     }
+    ]
+   },
+   "DependsOn": [
+    "EvoriaVpcPublicSubnet1DefaultRoute9008A0EB",
+    "EvoriaVpcPublicSubnet1RouteTableAssociation182DC141"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PublicSubnet1/NATGateway"
+   }
+  },
+  "EvoriaVpcPublicSubnet2Subnet02CB7FB5": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "ap-south-1b",
+    "CidrBlock": "10.0.1.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "EvoriaStack/EvoriaVpc/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EvoriaVpcEB3B02FF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PublicSubnet2/Subnet"
+   }
+  },
+  "EvoriaVpcPublicSubnet2RouteTableBBA2A400": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "EvoriaStack/EvoriaVpc/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EvoriaVpcEB3B02FF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PublicSubnet2/RouteTable"
+   }
+  },
+  "EvoriaVpcPublicSubnet2RouteTableAssociation9B243F1D": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "EvoriaVpcPublicSubnet2RouteTableBBA2A400"
+    },
+    "SubnetId": {
+     "Ref": "EvoriaVpcPublicSubnet2Subnet02CB7FB5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PublicSubnet2/RouteTableAssociation"
+   }
+  },
+  "EvoriaVpcPublicSubnet2DefaultRoute0E20A863": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "EvoriaVpcIGW7D8B194A"
+    },
+    "RouteTableId": {
+     "Ref": "EvoriaVpcPublicSubnet2RouteTableBBA2A400"
+    }
+   },
+   "DependsOn": [
+    "EvoriaVpcVPCGWBAC8218E"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PublicSubnet2/DefaultRoute"
+   }
+  },
+  "EvoriaVpcPrivateSubnet1SubnetE1F24873": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "ap-south-1a",
+    "CidrBlock": "10.0.2.0/24",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "EvoriaStack/EvoriaVpc/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EvoriaVpcEB3B02FF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PrivateSubnet1/Subnet"
+   }
+  },
+  "EvoriaVpcPrivateSubnet1RouteTable432776FE": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "EvoriaStack/EvoriaVpc/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EvoriaVpcEB3B02FF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PrivateSubnet1/RouteTable"
+   }
+  },
+  "EvoriaVpcPrivateSubnet1RouteTableAssociation167DA27C": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "EvoriaVpcPrivateSubnet1RouteTable432776FE"
+    },
+    "SubnetId": {
+     "Ref": "EvoriaVpcPrivateSubnet1SubnetE1F24873"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PrivateSubnet1/RouteTableAssociation"
+   }
+  },
+  "EvoriaVpcPrivateSubnet1DefaultRoute1ACE8EAC": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "EvoriaVpcPublicSubnet1NATGateway54BBD4F9"
+    },
+    "RouteTableId": {
+     "Ref": "EvoriaVpcPrivateSubnet1RouteTable432776FE"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PrivateSubnet1/DefaultRoute"
+   }
+  },
+  "EvoriaVpcPrivateSubnet2SubnetFE79261C": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "ap-south-1b",
+    "CidrBlock": "10.0.3.0/24",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "EvoriaStack/EvoriaVpc/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EvoriaVpcEB3B02FF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PrivateSubnet2/Subnet"
+   }
+  },
+  "EvoriaVpcPrivateSubnet2RouteTable5EBA58DD": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "EvoriaStack/EvoriaVpc/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EvoriaVpcEB3B02FF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PrivateSubnet2/RouteTable"
+   }
+  },
+  "EvoriaVpcPrivateSubnet2RouteTableAssociation2D39050E": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "EvoriaVpcPrivateSubnet2RouteTable5EBA58DD"
+    },
+    "SubnetId": {
+     "Ref": "EvoriaVpcPrivateSubnet2SubnetFE79261C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PrivateSubnet2/RouteTableAssociation"
+   }
+  },
+  "EvoriaVpcPrivateSubnet2DefaultRouteF094FE2C": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "EvoriaVpcPublicSubnet1NATGateway54BBD4F9"
+    },
+    "RouteTableId": {
+     "Ref": "EvoriaVpcPrivateSubnet2RouteTable5EBA58DD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/PrivateSubnet2/DefaultRoute"
+   }
+  },
+  "EvoriaVpcIGW7D8B194A": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "EvoriaStack/EvoriaVpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/IGW"
+   }
+  },
+  "EvoriaVpcVPCGWBAC8218E": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "EvoriaVpcIGW7D8B194A"
+    },
+    "VpcId": {
+     "Ref": "EvoriaVpcEB3B02FF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaVpc/VPCGW"
+   }
+  },
+  "AlbSg1155C1BE": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Evoria ALB - allows HTTP :80 from internet",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "HTTP from internet",
+      "FromPort": 80,
+      "IpProtocol": "tcp",
+      "ToPort": 80
+     }
+    ],
+    "VpcId": {
+     "Ref": "EvoriaVpcEB3B02FF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/AlbSg/Resource"
+   }
+  },
+  "FargateSg4CA74029": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Evoria Fargate tasks - accepts :3000 from ALB only",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "EvoriaVpcEB3B02FF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/FargateSg/Resource"
+   }
+  },
+  "FargateSgfromEvoriaStackAlbSg5AB3FBA63000E3BAD733": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Backend port from ALB only",
+    "FromPort": 3000,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "FargateSg4CA74029",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "AlbSg1155C1BE",
+      "GroupId"
+     ]
+    },
+    "ToPort": 3000
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/FargateSg/from EvoriaStackAlbSg5AB3FBA6:3000"
+   }
+  },
+  "RdsSg7F9F43B6": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Evoria RDS - accepts :3306 from Fargate only",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "255.255.255.255/32",
+      "Description": "Disallow all traffic",
+      "FromPort": 252,
+      "IpProtocol": "icmp",
+      "ToPort": 86
+     }
+    ],
+    "VpcId": {
+     "Ref": "EvoriaVpcEB3B02FF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/RdsSg/Resource"
+   }
+  },
+  "RdsSgfromEvoriaStackFargateSg4147EDE533067BAA1BAA": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "MySQL from Fargate only",
+    "FromPort": 3306,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "RdsSg7F9F43B6",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "FargateSg4CA74029",
+      "GroupId"
+     ]
+    },
+    "ToPort": 3306
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/RdsSg/from EvoriaStackFargateSg4147EDE5:3306"
+   }
+  },
+  "EvoriaBackendRepo983771E8": {
+   "Type": "AWS::ECR::Repository",
+   "Properties": {
+    "EmptyOnDelete": true,
+    "LifecyclePolicy": {
+     "LifecyclePolicyText": "{\"rules\":[{\"rulePriority\":1,\"description\":\"Keep only the 5 most recent images\",\"selection\":{\"tagStatus\":\"any\",\"countType\":\"imageCountMoreThan\",\"countNumber\":5},\"action\":{\"type\":\"expire\"}}]}"
+    },
+    "RepositoryName": "evoria/backend"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaBackendRepo/Resource"
+   }
+  },
+  "EvoriaDbSubnetGroupDA3B00DB": {
+   "Type": "AWS::RDS::DBSubnetGroup",
+   "Properties": {
+    "DBSubnetGroupDescription": "Subnet group for EvoriaDb database",
+    "SubnetIds": [
+     {
+      "Ref": "EvoriaVpcPrivateSubnet1SubnetE1F24873"
+     },
+     {
+      "Ref": "EvoriaVpcPrivateSubnet2SubnetFE79261C"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaDb/SubnetGroup/Default"
+   }
+  },
+  "EvoriaStackEvoriaDbSecretF5FAD8383fdaad7efa858a3daf9490cf0a702aeb": {
+   "Type": "AWS::SecretsManager::Secret",
+   "Properties": {
+    "Description": {
+     "Fn::Join": [
+      "",
+      [
+       "Generated by the CDK for stack: ",
+       {
+        "Ref": "AWS::StackName"
+       }
+      ]
+     ]
+    },
+    "GenerateSecretString": {
+     "ExcludeCharacters": " %+~`#$&*()|[]{}:;<>?!'/@\"\\",
+     "GenerateStringKey": "password",
+     "PasswordLength": 30,
+     "SecretStringTemplate": "{\"username\":\"evoria_user\"}"
+    },
+    "Name": "evoria/rds-credentials"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaDb/Secret/Resource"
+   }
+  },
+  "EvoriaDbSecretAttachment055BE12A": {
+   "Type": "AWS::SecretsManager::SecretTargetAttachment",
+   "Properties": {
+    "SecretId": {
+     "Ref": "EvoriaStackEvoriaDbSecretF5FAD8383fdaad7efa858a3daf9490cf0a702aeb"
+    },
+    "TargetId": {
+     "Ref": "EvoriaDbA51C66E5"
+    },
+    "TargetType": "AWS::RDS::DBInstance"
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaDb/Secret/Attachment/Resource"
+   }
+  },
+  "EvoriaDbA51C66E5": {
+   "Type": "AWS::RDS::DBInstance",
+   "Properties": {
+    "AllocatedStorage": "20",
+    "BackupRetentionPeriod": 1,
+    "CopyTagsToSnapshot": true,
+    "DBInstanceClass": "db.t3.micro",
+    "DBName": "evoria",
+    "DBSubnetGroupName": {
+     "Ref": "EvoriaDbSubnetGroupDA3B00DB"
+    },
+    "DeletionProtection": false,
+    "Engine": "mysql",
+    "EngineVersion": "8.0",
+    "MasterUserPassword": {
+     "Fn::Join": [
+      "",
+      [
+       "{{resolve:secretsmanager:",
+       {
+        "Ref": "EvoriaStackEvoriaDbSecretF5FAD8383fdaad7efa858a3daf9490cf0a702aeb"
+       },
+       ":SecretString:password::}}"
+      ]
+     ]
+    },
+    "MasterUsername": "evoria_user",
+    "MultiAZ": false,
+    "PubliclyAccessible": false,
+    "StorageType": "gp2",
+    "VPCSecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "RdsSg7F9F43B6",
+       "GroupId"
+      ]
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaDb/Resource"
+   }
+  },
+  "EcsTaskExecutionRoleC0B6A84D": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+       ]
+      ]
+     }
+    ],
+    "RoleName": "evoria-ecs-task-execution-role"
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EcsTaskExecutionRole/Resource"
+   }
+  },
+  "EcsTaskExecutionRoleDefaultPolicyDCEEFDC3": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ssm:GetParameter",
+        "ssm:GetParameters"
+       ],
+       "Effect": "Allow",
+       "Resource": "arn:aws:ssm:ap-south-1:310858751276:parameter/evoria/*"
+      },
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "EvoriaBackendRepo983771E8",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": "ecr:GetAuthorizationToken",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "EcsLogGroupD0138CE7",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "ssm:DescribeParameters",
+        "ssm:GetParameter",
+        "ssm:GetParameterHistory",
+        "ssm:GetParameters"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:ap-south-1:310858751276:parameter/evoria/DATABASE_URL"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:ap-south-1:310858751276:parameter/evoria/FRONTEND_URL"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:ap-south-1:310858751276:parameter/evoria/JWT_SECRET"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:ap-south-1:310858751276:parameter/evoria/PAYMENT_WEBHOOK_SECRET"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:ap-south-1:310858751276:parameter/evoria/RAZORPAY_KEY_ID"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:ap-south-1:310858751276:parameter/evoria/RAZORPAY_KEY_SECRET"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "EcsTaskExecutionRoleDefaultPolicyDCEEFDC3",
+    "Roles": [
+     {
+      "Ref": "EcsTaskExecutionRoleC0B6A84D"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EcsTaskExecutionRole/DefaultPolicy/Resource"
+   }
+  },
+  "EcsTaskRole8DFA0181": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "RoleName": "evoria-ecs-task-role"
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EcsTaskRole/Resource"
+   }
+  },
+  "GitHubOidcProvider7EBF861F": {
+   "Type": "Custom::AWSCDKOpenIdConnectProvider",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomAWSCDKOpenIdConnectProviderCustomResourceProviderHandlerF2C543E0",
+      "Arn"
+     ]
+    },
+    "ClientIDList": [
+     "sts.amazonaws.com"
+    ],
+    "ThumbprintList": [
+     "6938fd4d98bab03faadb97b34396831e3780aea1"
+    ],
+    "Url": "https://token.actions.githubusercontent.com",
+    "RejectUnauthorized": false,
+    "CodeHash": "c0d9f24649426c60a1bc01108070535a40353ae6cd8ceccb812969319b936e5d"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/GitHubOidcProvider/Resource/Default"
+   }
+  },
+  "CustomAWSCDKOpenIdConnectProviderCustomResourceProviderRole517FED65": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ],
+    "Policies": [
+     {
+      "PolicyName": "Inline",
+      "PolicyDocument": {
+       "Version": "2012-10-17",
+       "Statement": [
+        {
+         "Effect": "Allow",
+         "Resource": "*",
+         "Action": [
+          "iam:CreateOpenIDConnectProvider",
+          "iam:DeleteOpenIDConnectProvider",
+          "iam:UpdateOpenIDConnectProviderThumbprint",
+          "iam:AddClientIDToOpenIDConnectProvider",
+          "iam:RemoveClientIDFromOpenIDConnectProvider"
+         ]
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/Custom::AWSCDKOpenIdConnectProviderCustomResourceProvider/Role"
+   }
+  },
+  "CustomAWSCDKOpenIdConnectProviderCustomResourceProviderHandlerF2C543E0": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-310858751276-ap-south-1",
+     "S3Key": "c0d9f24649426c60a1bc01108070535a40353ae6cd8ceccb812969319b936e5d.zip"
+    },
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "__entrypoint__.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomAWSCDKOpenIdConnectProviderCustomResourceProviderRole517FED65",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs24.x"
+   },
+   "DependsOn": [
+    "CustomAWSCDKOpenIdConnectProviderCustomResourceProviderRole517FED65"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/Custom::AWSCDKOpenIdConnectProviderCustomResourceProvider/Handler",
+    "aws:asset:path": "asset.c0d9f24649426c60a1bc01108070535a40353ae6cd8ceccb812969319b936e5d",
+    "aws:asset:property": "Code"
+   }
+  },
+  "GitHubActionsRole4F1BBA26": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRoleWithWebIdentity",
+       "Condition": {
+        "StringEquals": {
+         "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+        },
+        "StringLike": {
+         "token.actions.githubusercontent.com:sub": "repo:sameer-singh1/Evoria:*"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Federated": {
+         "Ref": "GitHubOidcProvider7EBF861F"
+        }
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "RoleName": "evoria-github-actions-role"
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/GitHubActionsRole/Resource"
+   }
+  },
+  "GitHubActionsRoleDefaultPolicy69DA0189": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ecr:GetAuthorizationToken",
+        "ecs:DescribeServices",
+        "ecs:DescribeTaskDefinition",
+        "ecs:DescribeTasks",
+        "ecs:ListTaskDefinitions",
+        "ecs:RegisterTaskDefinition",
+        "ecs:RunTask",
+        "ecs:StopTask",
+        "ecs:UpdateService",
+        "logs:DescribeLogGroups",
+        "logs:DescribeLogStreams",
+        "logs:GetLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:BatchGetImage",
+        "ecr:CompleteLayerUpload",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:InitiateLayerUpload",
+        "ecr:PutImage",
+        "ecr:UploadLayerPart"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "EvoriaBackendRepo983771E8",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": "iam:PassRole",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "EcsTaskExecutionRoleC0B6A84D",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::GetAtt": [
+          "EcsTaskRole8DFA0181",
+          "Arn"
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "s3:Abort*",
+        "s3:DeleteObject*",
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*",
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "FrontendBucketEFE2E19C",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "FrontendBucketEFE2E19C",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "cloudfront:CreateInvalidation",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:aws:cloudfront::310858751276:distribution/",
+           {
+            "Ref": "ApiDistribution1DFA7F7C"
+           }
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:aws:cloudfront::310858751276:distribution/",
+           {
+            "Ref": "FrontendDistributionE6EAF405"
+           }
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GitHubActionsRoleDefaultPolicy69DA0189",
+    "Roles": [
+     {
+      "Ref": "GitHubActionsRole4F1BBA26"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/GitHubActionsRole/DefaultPolicy/Resource"
+   }
+  },
+  "EvoriaCluster79846193": {
+   "Type": "AWS::ECS::Cluster",
+   "Properties": {
+    "ClusterName": "evoria-cluster"
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaCluster/Resource"
+   }
+  },
+  "EcsLogGroupD0138CE7": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/ecs/evoria-backend",
+    "RetentionInDays": 7
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EcsLogGroup/Resource"
+   }
+  },
+  "EvoriaTaskDef42E8C076": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Essential": true,
+      "Image": {
+       "Fn::Join": [
+        "",
+        [
+         {
+          "Fn::Select": [
+           4,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "EvoriaBackendRepo983771E8",
+               "Arn"
+              ]
+             }
+            ]
+           }
+          ]
+         },
+         ".dkr.ecr.",
+         {
+          "Fn::Select": [
+           3,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "EvoriaBackendRepo983771E8",
+               "Arn"
+              ]
+             }
+            ]
+           }
+          ]
+         },
+         ".",
+         {
+          "Ref": "AWS::URLSuffix"
+         },
+         "/",
+         {
+          "Ref": "EvoriaBackendRepo983771E8"
+         },
+         ":latest"
+        ]
+       ]
+      },
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "EcsLogGroupD0138CE7"
+        },
+        "awslogs-stream-prefix": "evoria-backend",
+        "awslogs-region": "ap-south-1"
+       }
+      },
+      "Name": "evoria-backend",
+      "PortMappings": [
+       {
+        "ContainerPort": 3000,
+        "Protocol": "tcp"
+       }
+      ],
+      "Secrets": [
+       {
+        "Name": "DATABASE_URL",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:ap-south-1:310858751276:parameter/evoria/DATABASE_URL"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "JWT_SECRET",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:ap-south-1:310858751276:parameter/evoria/JWT_SECRET"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "PAYMENT_WEBHOOK_SECRET",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:ap-south-1:310858751276:parameter/evoria/PAYMENT_WEBHOOK_SECRET"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "RAZORPAY_KEY_ID",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:ap-south-1:310858751276:parameter/evoria/RAZORPAY_KEY_ID"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "RAZORPAY_KEY_SECRET",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:ap-south-1:310858751276:parameter/evoria/RAZORPAY_KEY_SECRET"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "FRONTEND_URL",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:ap-south-1:310858751276:parameter/evoria/FRONTEND_URL"
+          ]
+         ]
+        }
+       }
+      ]
+     }
+    ],
+    "Cpu": "256",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "EcsTaskExecutionRoleC0B6A84D",
+      "Arn"
+     ]
+    },
+    "Family": "evoria-backend",
+    "Memory": "512",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "EcsTaskRole8DFA0181",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaTaskDef/Resource"
+   }
+  },
+  "EvoriaAlb30AF4CA4": {
+   "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+   "Properties": {
+    "LoadBalancerAttributes": [
+     {
+      "Key": "deletion_protection.enabled",
+      "Value": "false"
+     }
+    ],
+    "Name": "evoria-alb",
+    "Scheme": "internet-facing",
+    "SecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "AlbSg1155C1BE",
+       "GroupId"
+      ]
+     }
+    ],
+    "Subnets": [
+     {
+      "Ref": "EvoriaVpcPublicSubnet1Subnet8EAB3F55"
+     },
+     {
+      "Ref": "EvoriaVpcPublicSubnet2Subnet02CB7FB5"
+     }
+    ],
+    "Type": "application"
+   },
+   "DependsOn": [
+    "EvoriaVpcPublicSubnet1DefaultRoute9008A0EB",
+    "EvoriaVpcPublicSubnet1RouteTableAssociation182DC141",
+    "EvoriaVpcPublicSubnet2DefaultRoute0E20A863",
+    "EvoriaVpcPublicSubnet2RouteTableAssociation9B243F1D"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaAlb/Resource"
+   }
+  },
+  "EvoriaAlbHttpListenerC3653327": {
+   "Type": "AWS::ElasticLoadBalancingV2::Listener",
+   "Properties": {
+    "DefaultActions": [
+     {
+      "TargetGroupArn": {
+       "Ref": "EvoriaTargetGroupED909740"
+      },
+      "Type": "forward"
+     }
+    ],
+    "LoadBalancerArn": {
+     "Ref": "EvoriaAlb30AF4CA4"
+    },
+    "Port": 80,
+    "Protocol": "HTTP"
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaAlb/HttpListener/Resource"
+   }
+  },
+  "EvoriaServiceC2540045": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "EvoriaCluster79846193"
+    },
+    "DeploymentConfiguration": {
+     "Alarms": {
+      "AlarmNames": [],
+      "Enable": false,
+      "Rollback": false
+     },
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "DesiredCount": 1,
+    "EnableECSManagedTags": false,
+    "HealthCheckGracePeriodSeconds": 60,
+    "LaunchType": "FARGATE",
+    "LoadBalancers": [
+     {
+      "ContainerName": "evoria-backend",
+      "ContainerPort": 3000,
+      "TargetGroupArn": {
+       "Ref": "EvoriaTargetGroupED909740"
+      }
+     }
+    ],
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "DISABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "FargateSg4CA74029",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Ref": "EvoriaVpcPrivateSubnet1SubnetE1F24873"
+       },
+       {
+        "Ref": "EvoriaVpcPrivateSubnet2SubnetFE79261C"
+       }
+      ]
+     }
+    },
+    "ServiceName": "evoria-service",
+    "TaskDefinition": {
+     "Ref": "EvoriaTaskDef42E8C076"
+    }
+   },
+   "DependsOn": [
+    "EcsTaskRole8DFA0181",
+    "EvoriaAlbHttpListenerC3653327"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaService/Service"
+   }
+  },
+  "EvoriaTargetGroupED909740": {
+   "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+   "Properties": {
+    "HealthCheckIntervalSeconds": 30,
+    "HealthCheckPath": "/health",
+    "HealthCheckTimeoutSeconds": 5,
+    "HealthyThresholdCount": 2,
+    "Matcher": {
+     "HttpCode": "200"
+    },
+    "Port": 3000,
+    "Protocol": "HTTP",
+    "TargetGroupAttributes": [
+     {
+      "Key": "stickiness.enabled",
+      "Value": "false"
+     }
+    ],
+    "TargetType": "ip",
+    "UnhealthyThresholdCount": 3,
+    "VpcId": {
+     "Ref": "EvoriaVpcEB3B02FF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EvoriaTargetGroup/Resource"
+   }
+  },
+  "ApiDistribution1DFA7F7C": {
+   "Type": "AWS::CloudFront::Distribution",
+   "Properties": {
+    "DistributionConfig": {
+     "Comment": "Evoria API — HTTPS proxy over ALB (fixes mixed-content)",
+     "DefaultCacheBehavior": {
+      "AllowedMethods": [
+       "GET",
+       "HEAD",
+       "OPTIONS",
+       "PUT",
+       "PATCH",
+       "POST",
+       "DELETE"
+      ],
+      "CachePolicyId": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
+      "Compress": true,
+      "OriginRequestPolicyId": "b689b0a8-53d0-40ab-baf2-68738e2966ac",
+      "TargetOriginId": "EvoriaStackApiDistributionOrigin1A8E35E1A",
+      "ViewerProtocolPolicy": "https-only"
+     },
+     "Enabled": true,
+     "HttpVersion": "http2",
+     "IPV6Enabled": true,
+     "Origins": [
+      {
+       "CustomOriginConfig": {
+        "OriginProtocolPolicy": "http-only",
+        "OriginSSLProtocols": [
+         "TLSv1.2"
+        ]
+       },
+       "DomainName": {
+        "Fn::GetAtt": [
+         "EvoriaAlb30AF4CA4",
+         "DNSName"
+        ]
+       },
+       "Id": "EvoriaStackApiDistributionOrigin1A8E35E1A"
+      }
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/ApiDistribution/Resource"
+   }
+  },
+  "FrontendBucketEFE2E19C": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketName": "evoria-frontend-310858751276",
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    },
+    "Tags": [
+     {
+      "Key": "aws-cdk:auto-delete-objects",
+      "Value": "true"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/FrontendBucket/Resource"
+   }
+  },
+  "FrontendBucketPolicy1DFF75D9": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "FrontendBucketEFE2E19C"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:DeleteObject*",
+        "s3:GetBucket*",
+        "s3:List*",
+        "s3:PutBucketPolicy"
+       ],
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::GetAtt": [
+          "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+          "Arn"
+         ]
+        }
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "FrontendBucketEFE2E19C",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "FrontendBucketEFE2E19C",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "s3:GetObject",
+       "Condition": {
+        "StringEquals": {
+         "AWS:SourceArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":cloudfront::",
+            {
+             "Ref": "AWS::AccountId"
+            },
+            ":distribution/",
+            {
+             "Ref": "FrontendDistributionE6EAF405"
+            }
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "cloudfront.amazonaws.com"
+       },
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "FrontendBucketEFE2E19C",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/FrontendBucket/Policy/Resource"
+   }
+  },
+  "FrontendBucketAutoDeleteObjectsCustomResourceDB860B32": {
+   "Type": "Custom::S3AutoDeleteObjects",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+      "Arn"
+     ]
+    },
+    "BucketName": {
+     "Ref": "FrontendBucketEFE2E19C"
+    }
+   },
+   "DependsOn": [
+    "FrontendBucketPolicy1DFF75D9"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/FrontendBucket/AutoDeleteObjectsCustomResource/Default"
+   }
+  },
+  "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role"
+   }
+  },
+  "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-310858751276-ap-south-1",
+     "S3Key": "faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6.zip"
+    },
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "index.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs24.x",
+    "Description": {
+     "Fn::Join": [
+      "",
+      [
+       "Lambda function for auto-deleting objects in ",
+       {
+        "Ref": "FrontendBucketEFE2E19C"
+       },
+       " S3 bucket."
+      ]
+     ]
+    }
+   },
+   "DependsOn": [
+    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler",
+    "aws:asset:path": "asset.faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6",
+    "aws:asset:property": "Code"
+   }
+  },
+  "FrontendDistributionOrigin1S3OriginAccessControl51A3EFC6": {
+   "Type": "AWS::CloudFront::OriginAccessControl",
+   "Properties": {
+    "OriginAccessControlConfig": {
+     "Name": "EvoriaStackFrontendDistributOrigin1S3OriginAccessControl328CDBFD",
+     "OriginAccessControlOriginType": "s3",
+     "SigningBehavior": "always",
+     "SigningProtocol": "sigv4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/FrontendDistribution/Origin1/S3OriginAccessControl/Resource"
+   }
+  },
+  "FrontendDistributionE6EAF405": {
+   "Type": "AWS::CloudFront::Distribution",
+   "Properties": {
+    "DistributionConfig": {
+     "Comment": "Evoria Frontend — React app from S3",
+     "CustomErrorResponses": [
+      {
+       "ErrorCachingMinTTL": 0,
+       "ErrorCode": 403,
+       "ResponseCode": 200,
+       "ResponsePagePath": "/index.html"
+      },
+      {
+       "ErrorCachingMinTTL": 0,
+       "ErrorCode": 404,
+       "ResponseCode": 200,
+       "ResponsePagePath": "/index.html"
+      }
+     ],
+     "DefaultCacheBehavior": {
+      "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+      "Compress": true,
+      "TargetOriginId": "EvoriaStackFrontendDistributionOrigin1490B7C11",
+      "ViewerProtocolPolicy": "redirect-to-https"
+     },
+     "DefaultRootObject": "index.html",
+     "Enabled": true,
+     "HttpVersion": "http2",
+     "IPV6Enabled": true,
+     "Origins": [
+      {
+       "DomainName": {
+        "Fn::GetAtt": [
+         "FrontendBucketEFE2E19C",
+         "RegionalDomainName"
+        ]
+       },
+       "Id": "EvoriaStackFrontendDistributionOrigin1490B7C11",
+       "OriginAccessControlId": {
+        "Fn::GetAtt": [
+         "FrontendDistributionOrigin1S3OriginAccessControl51A3EFC6",
+         "Id"
+        ]
+       },
+       "S3OriginConfig": {
+        "OriginAccessIdentity": ""
+       }
+      }
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/FrontendDistribution/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/5VTTW/bMAz9Lc1Z1dpk2GG3fGxFgGIJ4qKXYShomfWYOJIhUukKw/99kBXHblEM2ImPj08EvzTV0y+3+uYKXvjaFIfrinLdZALmoOCFnxo0U9081kYtn+3jdqm2Ia/IZCG3KJEb0M4FwQfIKxz4gZszO0Mg5OxFHMG39TaaHyB3IPgCr2rr6QSCQ+K1FfQWL4JUydmbi4D5fUQrKkMTPMnrnXeh7mr4J7G2pUfmVqHxutlh7ZjE+S7/4LXKF6ybFQjkwLi2LGANqlTeJfNqMSZ6dYbGpx5Wi/5lq7hj+QgWSvS6SYVFYTIP4EuUUWMXwftIqwiOutm5NPPObl1FpmvijDY12nWxdNaika13JyrQx65ZN8sqsKCP6h5+B19CXBofVvhMlvqVvWecFSCLfsSd32boT2TSGSTYqsqVrJt7V15G1uNWYQUsZCoHRQ4VWEO2PE11M6/rikx3M/cOikUXS9W+8cc6YkF71vR4FE8TvNQwcltlKheKZ++s6GZFLJ7y0Df/xs9mG08l2bkxyBwH4V0VVR/QreKZbhbBHNIhJPSzmRzpD9nJ18n448UfxzPdhVgn6TyIW2GFgpt8j0Z40v5SKTSseuz/R+70IBMQjOcUU7et2iG74OP+Aos7Dm78Fx+G+qtaAKOaM6NkAiXZshtKkDpIq6wrUO/502n6Wd/O9M3VnomufbBCR9S7ZP8CToXt2Y8EAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "RdsEndpoint": {
+   "Description": "→ Use this to build DATABASE_URL: mysql://evoria_user:<pw>@<this>:3306/evoria",
+   "Value": {
+    "Fn::GetAtt": [
+     "EvoriaDbA51C66E5",
+     "Endpoint.Address"
+    ]
+   }
+  },
+  "RdsSecretArn": {
+   "Description": "→ Fetch the RDS password from here: aws secretsmanager get-secret-value --secret-id <this>",
+   "Value": {
+    "Ref": "EvoriaDbSecretAttachment055BE12A"
+   }
+  },
+  "EcrRepositoryUri": {
+   "Description": "→ GitHub Secret: ECR_REPOSITORY",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      {
+       "Fn::Select": [
+        4,
+        {
+         "Fn::Split": [
+          ":",
+          {
+           "Fn::GetAtt": [
+            "EvoriaBackendRepo983771E8",
+            "Arn"
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      ".dkr.ecr.",
+      {
+       "Fn::Select": [
+        3,
+        {
+         "Fn::Split": [
+          ":",
+          {
+           "Fn::GetAtt": [
+            "EvoriaBackendRepo983771E8",
+            "Arn"
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      ".",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "EvoriaBackendRepo983771E8"
+      }
+     ]
+    ]
+   }
+  },
+  "GitHubActionsRoleArn": {
+   "Description": "→ GitHub Secret: AWS_ROLE_ARN",
+   "Value": {
+    "Fn::GetAtt": [
+     "GitHubActionsRole4F1BBA26",
+     "Arn"
+    ]
+   }
+  },
+  "ApiCloudFrontUrl": {
+   "Description": "→ GitHub Secret: API_CLOUDFRONT_URL  |  Also set as /evoria/FRONTEND_URL... wait no, this is the API",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Fn::GetAtt": [
+        "ApiDistribution1DFA7F7C",
+        "DomainName"
+       ]
+      }
+     ]
+    ]
+   }
+  },
+  "FrontendCloudFrontUrl": {
+   "Description": "→ Open this URL in your browser  |  SSM: /evoria/FRONTEND_URL",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Fn::GetAtt": [
+        "FrontendDistributionE6EAF405",
+        "DomainName"
+       ]
+      }
+     ]
+    ]
+   }
+  },
+  "FrontendS3Bucket": {
+   "Description": "→ GitHub Secret: S3_BUCKET",
+   "Value": {
+    "Ref": "FrontendBucketEFE2E19C"
+   }
+  },
+  "FrontendCloudFrontDistId": {
+   "Description": "→ GitHub Secret: FRONTEND_CF_DIST_ID",
+   "Value": {
+    "Ref": "FrontendDistributionE6EAF405"
+   }
+  },
+  "ApiCloudFrontDistId": {
+   "Description": "→ GitHub Secret: API_CF_DIST_ID",
+   "Value": {
+    "Ref": "ApiDistribution1DFA7F7C"
+   }
+  },
+  "PrivateSubnetId": {
+   "Description": "→ GitHub Secret: PRIVATE_SUBNET_ID",
+   "Value": {
+    "Ref": "EvoriaVpcPrivateSubnet1SubnetE1F24873"
+   }
+  },
+  "FargateSgId": {
+   "Description": "→ GitHub Secret: FARGATE_SG_ID",
+   "Value": {
+    "Fn::GetAtt": [
+     "FargateSg4CA74029",
+     "GroupId"
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

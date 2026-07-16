@@ -1,0 +1,20 @@
+# Dependencies — never copy into Docker image
+node_modules
+
+# TypeScript source — compiled to dist/ in builder stage
+src/generated
+
+# Local build output — image builds fresh inside Docker
+dist
+
+# Secrets — NEVER goes into the image
+.env
+.env.*
+
+# Git history — not needed at runtime
+.git
+.gitignore
+
+# Docs and editor files
+*.md
+.vscode

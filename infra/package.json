@@ -1,0 +1,20 @@
+{
+  "name": "evoria-infra",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AWS CDK infrastructure for the Evoria platform",
+  "scripts": {
+    "build": "tsc",
+    "cdk": "cdk"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.160.0",
+    "constructs": "^10.0.0"
+  },
+  "devDependencies": {
+    "aws-cdk": "^2.160.0",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.4.0",
+    "@types/node": "^20.0.0"
+  }
+}

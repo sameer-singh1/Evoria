@@ -1,0 +1,1095 @@
+{
+  "/EvoriaStack": [
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/Custom::AWSCDKOpenIdConnectProviderCustomResourceProvider": [
+    {
+      "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
+      "data": true
+    }
+  ],
+  "/EvoriaStack/EvoriaService": [
+    {
+      "type": "aws:cdk:warning",
+      "data": "Enable the 'circuitBreaker' property to trigger a quicker deployment failure if tasks are failing to come start (without this setting deployments may take up to 3 hours to fail). [ack: @aws-cdk/aws-ecs:shouldUseCircuitBreaker]",
+      "trace": [
+        "Annotations.addMessage (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\core\\lib\\annotations.js:1:3441)",
+        "Annotations.addWarningV2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\core\\lib\\annotations.js:1:2129)",
+        "new BaseService2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ecs\\lib\\base\\base-service.js:1:14671)",
+        "new BaseService2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\core\\lib\\no-box-stack-traces.js:1:345)",
+        "new FargateService2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ecs\\lib\\fargate\\fargate-service.js:1:7829)",
+        "new FargateService2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\core\\lib\\prop-injectable.js:1:855)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:353:21)",
+        "Object.<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "Module._compile (node:internal/modules/cjs/loader:1761:14)",
+        "Module.m._compile (C:\\D\\Evoria\\infra\\node_modules\\ts-node\\src\\index.ts:1618:23)",
+        "node:internal/modules/cjs/loader:1893:10",
+        "Object.require.extensions.<computed> [as .ts] (C:\\D\\Evoria\\infra\\node_modules\\ts-node\\src\\index.ts:1621:12)",
+        "Module.load (node:internal/modules/cjs/loader:1481:32)",
+        "Module._load (node:internal/modules/cjs/loader:1300:12)",
+        "TracingChannel.traceSync (node:diagnostics_channel:328:14)",
+        "wrapModuleLoad (node:internal/modules/cjs/loader:245:24)",
+        "Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)",
+        "phase4 (C:\\D\\Evoria\\infra\\node_modules\\ts-node\\src\\bin.ts:649:14)",
+        "bootstrap (C:\\D\\Evoria\\infra\\node_modules\\ts-node\\src\\bin.ts:95:10)",
+        "main (C:\\D\\Evoria\\infra\\node_modules\\ts-node\\src\\bin.ts:55:10)",
+        "Object.<anonymous> (C:\\D\\Evoria\\infra\\node_modules\\ts-node\\src\\bin.ts:800:3)",
+        "Module._compile (node:internal/modules/cjs/loader:1761:14)",
+        "Object.<anonymous> (node:internal/modules/cjs/loader:1893:10)",
+        "Module.load (node:internal/modules/cjs/loader:1481:32)",
+        "Module._load (node:internal/modules/cjs/loader:1300:12)",
+        "TracingChannel.traceSync (node:diagnostics_channel:328:14)",
+        "wrapModuleLoad (node:internal/modules/cjs/loader:245:24)",
+        "Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)",
+        "node:internal/main/run_main_module:33:47"
+      ]
+    },
+    {
+      "type": "aws:cdk:warning",
+      "data": "minHealthyPercent has not been configured so the default value of 50% is used. The number of running tasks will decrease below the desired count during deployments etc. See https://github.com/aws/aws-cdk/issues/31705 [ack: @aws-cdk/aws-ecs:minHealthyPercent]",
+      "trace": [
+        "Annotations.addMessage (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\core\\lib\\annotations.js:1:3441)",
+        "Annotations.addWarningV2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\core\\lib\\annotations.js:1:2129)",
+        "new BaseService2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ecs\\lib\\base\\base-service.js:1:16295)",
+        "new BaseService2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\core\\lib\\no-box-stack-traces.js:1:345)",
+        "new FargateService2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ecs\\lib\\fargate\\fargate-service.js:1:7829)",
+        "new FargateService2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\core\\lib\\prop-injectable.js:1:855)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:353:21)",
+        "Object.<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "Module._compile (node:internal/modules/cjs/loader:1761:14)",
+        "Module.m._compile (C:\\D\\Evoria\\infra\\node_modules\\ts-node\\src\\index.ts:1618:23)",
+        "node:internal/modules/cjs/loader:1893:10",
+        "Object.require.extensions.<computed> [as .ts] (C:\\D\\Evoria\\infra\\node_modules\\ts-node\\src\\index.ts:1621:12)",
+        "Module.load (node:internal/modules/cjs/loader:1481:32)",
+        "Module._load (node:internal/modules/cjs/loader:1300:12)",
+        "TracingChannel.traceSync (node:diagnostics_channel:328:14)",
+        "wrapModuleLoad (node:internal/modules/cjs/loader:245:24)",
+        "Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)",
+        "phase4 (C:\\D\\Evoria\\infra\\node_modules\\ts-node\\src\\bin.ts:649:14)",
+        "bootstrap (C:\\D\\Evoria\\infra\\node_modules\\ts-node\\src\\bin.ts:95:10)",
+        "main (C:\\D\\Evoria\\infra\\node_modules\\ts-node\\src\\bin.ts:55:10)",
+        "Object.<anonymous> (C:\\D\\Evoria\\infra\\node_modules\\ts-node\\src\\bin.ts:800:3)",
+        "Module._compile (node:internal/modules/cjs/loader:1761:14)",
+        "Object.<anonymous> (node:internal/modules/cjs/loader:1893:10)",
+        "Module.load (node:internal/modules/cjs/loader:1481:32)",
+        "Module._load (node:internal/modules/cjs/loader:1300:12)",
+        "TracingChannel.traceSync (node:diagnostics_channel:328:14)",
+        "wrapModuleLoad (node:internal/modules/cjs/loader:245:24)",
+        "Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)",
+        "node:internal/main/run_main_module:33:47"
+      ]
+    }
+  ],
+  "/EvoriaStack/Custom::S3AutoDeleteObjectsCustomResourceProvider": [
+    {
+      "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
+      "data": true
+    }
+  ],
+  "/EvoriaStack/RdsEndpoint": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "RdsEndpoint"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:489:5)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/RdsSecretArn": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "RdsSecretArn"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:494:5)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EcrRepositoryUri": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EcrRepositoryUri"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:499:5)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/GitHubActionsRoleArn": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GitHubActionsRoleArn"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:504:5)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/ApiCloudFrontUrl": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiCloudFrontUrl"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:509:5)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/FrontendCloudFrontUrl": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "FrontendCloudFrontUrl"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:514:5)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/FrontendS3Bucket": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "FrontendS3Bucket"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:519:5)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/FrontendCloudFrontDistId": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "FrontendCloudFrontDistId"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:524:5)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/ApiCloudFrontDistId": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiCloudFrontDistId"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:529:5)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/PrivateSubnetId": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "PrivateSubnetId"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:534:5)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/FargateSgId": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "FargateSgId"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:539:5)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/BootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BootstrapVersion"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/EvoriaStack/CheckBootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CheckBootstrapVersion"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcEB3B02FF"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Vpc2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:27:17)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/IGW": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcIGW7D8B194A"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Vpc2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:27:17)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/VPCGW": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcVPCGWBAC8218E"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Vpc2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:27:17)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/AlbSg/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AlbSg1155C1BE"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new SecurityGroup2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:51:19)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/FargateSg/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "FargateSg4CA74029"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new SecurityGroup2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:63:23)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/FargateSg/from EvoriaStackAlbSg5AB3FBA6:3000": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "FargateSgfromEvoriaStackAlbSg5AB3FBA63000E3BAD733"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.<anonymous> in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:68:15)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/RdsSg/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "RdsSg7F9F43B6"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new SecurityGroup2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:75:19)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/RdsSg/from EvoriaStackFargateSg4147EDE5:3306": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "RdsSgfromEvoriaStackFargateSg4147EDE533067BAA1BAA"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.<anonymous> in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:80:11)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaBackendRepo/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaBackendRepo983771E8"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Repository2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:91:21)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaDb/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaDbA51C66E5"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new DatabaseInstance2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:110:16)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EcsTaskExecutionRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EcsTaskExecutionRoleC0B6A84D"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Role2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:143:31)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EcsTaskRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EcsTaskRole8DFA0181"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Role2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:165:22)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/Custom::AWSCDKOpenIdConnectProviderCustomResourceProvider/Role": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CustomAWSCDKOpenIdConnectProviderCustomResourceProviderRole517FED65"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new OpenIdConnectProvider2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:178:32)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/Custom::AWSCDKOpenIdConnectProviderCustomResourceProvider/Handler": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CustomAWSCDKOpenIdConnectProviderCustomResourceProviderHandlerF2C543E0"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new OpenIdConnectProvider2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:178:32)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/GitHubActionsRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GitHubActionsRole4F1BBA26"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Role2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:188:31)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaCluster/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaCluster79846193"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Cluster2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:259:21)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EcsLogGroup/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EcsLogGroupD0138CE7"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new LogGroup2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:269:22)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaTaskDef/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaTaskDef42E8C076"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new FargateTaskDefinition2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:296:21)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaAlb/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaAlb30AF4CA4"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new ApplicationLoadBalancer2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:328:17)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaService/Service": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaServiceC2540045"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new FargateService2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:353:21)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaTargetGroup/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaTargetGroupED909740"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new ApplicationTargetGroup2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:365:25)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/ApiDistribution/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiDistribution1DFA7F7C"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Distribution2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:402:29)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/FrontendBucket/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "FrontendBucketEFE2E19C"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Bucket2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:420:28)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    },
+    {
+      "type": "aws:cdk:analytics:mixin",
+      "data": {
+        "mixin": "aws-cdk-lib.aws_s3.mixins.BucketAutoDeleteObjects"
+      }
+    }
+  ],
+  "/EvoriaStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/EvoriaStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/EvoriaStack/FrontendDistribution/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "FrontendDistributionE6EAF405"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Distribution2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:442:34)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/CDKMetadata/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CDKMetadata"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib, node internals...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PublicSubnet1/Subnet": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPublicSubnet1Subnet8EAB3F55"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ec2\\lib\\vpc.js:1:268 in aws-cdk-lib...",
+        "Array.forEach (:)",
+        "...aws-cdk-lib..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PublicSubnet1/RouteTable": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPublicSubnet1RouteTable7879CCAC"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ec2\\lib\\vpc.js:1:268 in aws-cdk-lib...",
+        "Array.forEach (:)",
+        "...aws-cdk-lib..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PublicSubnet1/RouteTableAssociation": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPublicSubnet1RouteTableAssociation182DC141"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ec2\\lib\\vpc.js:1:268 in aws-cdk-lib...",
+        "Array.forEach (:)",
+        "...aws-cdk-lib..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PublicSubnet1/DefaultRoute": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPublicSubnet1DefaultRoute9008A0EB"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ec2\\lib\\vpc.js:1:208 in aws-cdk-lib...",
+        "Array.forEach (:)",
+        "...new Vpc2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:27:17)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PublicSubnet1/EIP": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPublicSubnet1EIP6F099CD4"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Vpc2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:27:17)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PublicSubnet1/NATGateway": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPublicSubnet1NATGateway54BBD4F9"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Vpc2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:27:17)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PublicSubnet2/Subnet": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPublicSubnet2Subnet02CB7FB5"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ec2\\lib\\vpc.js:1:268 in aws-cdk-lib...",
+        "Array.forEach (:)",
+        "...aws-cdk-lib..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PublicSubnet2/RouteTable": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPublicSubnet2RouteTableBBA2A400"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ec2\\lib\\vpc.js:1:268 in aws-cdk-lib...",
+        "Array.forEach (:)",
+        "...aws-cdk-lib..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PublicSubnet2/RouteTableAssociation": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPublicSubnet2RouteTableAssociation9B243F1D"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ec2\\lib\\vpc.js:1:268 in aws-cdk-lib...",
+        "Array.forEach (:)",
+        "...aws-cdk-lib..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PublicSubnet2/DefaultRoute": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPublicSubnet2DefaultRoute0E20A863"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ec2\\lib\\vpc.js:1:208 in aws-cdk-lib...",
+        "Array.forEach (:)",
+        "...new Vpc2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:27:17)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PrivateSubnet1/Subnet": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPrivateSubnet1SubnetE1F24873"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ec2\\lib\\vpc.js:1:270 in aws-cdk-lib...",
+        "Array.forEach (:)",
+        "...aws-cdk-lib..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PrivateSubnet1/RouteTable": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPrivateSubnet1RouteTable432776FE"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ec2\\lib\\vpc.js:1:270 in aws-cdk-lib...",
+        "Array.forEach (:)",
+        "...aws-cdk-lib..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PrivateSubnet1/RouteTableAssociation": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPrivateSubnet1RouteTableAssociation167DA27C"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ec2\\lib\\vpc.js:1:270 in aws-cdk-lib...",
+        "Array.forEach (:)",
+        "...aws-cdk-lib..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PrivateSubnet1/DefaultRoute": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPrivateSubnet1DefaultRoute1ACE8EAC"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Vpc2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:27:17)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PrivateSubnet2/Subnet": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPrivateSubnet2SubnetFE79261C"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ec2\\lib\\vpc.js:1:270 in aws-cdk-lib...",
+        "Array.forEach (:)",
+        "...aws-cdk-lib..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PrivateSubnet2/RouteTable": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPrivateSubnet2RouteTable5EBA58DD"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ec2\\lib\\vpc.js:1:270 in aws-cdk-lib...",
+        "Array.forEach (:)",
+        "...aws-cdk-lib..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PrivateSubnet2/RouteTableAssociation": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPrivateSubnet2RouteTableAssociation2D39050E"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ec2\\lib\\vpc.js:1:270 in aws-cdk-lib...",
+        "Array.forEach (:)",
+        "...aws-cdk-lib..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaVpc/PrivateSubnet2/DefaultRoute": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaVpcPrivateSubnet2DefaultRouteF094FE2C"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Vpc2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:27:17)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaDb/SubnetGroup/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaDbSubnetGroupDA3B00DB"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new DatabaseInstance2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:110:16)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaDb/Secret/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaStackEvoriaDbSecretF5FAD8383fdaad7efa858a3daf9490cf0a702aeb"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new DatabaseInstance2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:110:16)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)"
+      ]
+    }
+  ],
+  "/EvoriaStack/EcsTaskExecutionRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EcsTaskExecutionRoleDefaultPolicyDCEEFDC3"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.<anonymous> in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:154:23)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/EvoriaStack/GitHubOidcProvider/Resource/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GitHubOidcProvider7EBF861F"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new OpenIdConnectProvider2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:178:32)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/GitHubActionsRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GitHubActionsRoleDefaultPolicy69DA0189"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.<anonymous> in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:206:23)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaAlb/HttpListener/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaAlbHttpListenerC3653327"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.<anonymous> in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:336:26)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/EvoriaStack/FrontendBucket/Policy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "FrontendBucketPolicy1DFF75D9"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Bucket2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:420:28)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals..."
+      ]
+    },
+    {
+      "type": "aws:cdk:analytics:mixin",
+      "data": {
+        "mixin": "aws-cdk-lib.aws_s3.mixins.BucketPolicyStatements"
+      }
+    }
+  ],
+  "/EvoriaStack/FrontendBucket/AutoDeleteObjectsCustomResource/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "FrontendBucketAutoDeleteObjectsCustomResourceDB860B32"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/EvoriaStack/EvoriaDb/Secret/Attachment/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EvoriaDbSecretAttachment055BE12A"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new DatabaseInstance2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:110:16)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/EvoriaStack/FrontendDistribution/Origin1/S3OriginAccessControl/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "FrontendDistributionOrigin1S3OriginAccessControl51A3EFC6"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Distribution2 in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:442:34)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals..."
+      ]
+    }
+  ]
+}
