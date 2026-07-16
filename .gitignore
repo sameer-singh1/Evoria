@@ -17,3 +17,7 @@ backend/src/generated/
 
 # Claude Design handoff files (not project source)
 DESIGN/
+
+# Local helpers and documentation
+db-tunnel.ps1
+DEPLOYMENT_RUNBOOK.md
