@@ -465,7 +465,7 @@
   "RdsSg7F9F43B6": {
    "Type": "AWS::EC2::SecurityGroup",
    "Properties": {
-    "GroupDescription": "Evoria RDS - accepts :3306 from Fargate only",
+    "GroupDescription": "Evoria RDS - accepts :3306 from Fargate and developer",
     "SecurityGroupEgress": [
      {
       "CidrIp": "255.255.255.255/32",
@@ -473,6 +473,15 @@
       "FromPort": 252,
       "IpProtocol": "icmp",
       "ToPort": 86
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "MySQL from developer GUI client",
+      "FromPort": 3306,
+      "IpProtocol": "tcp",
+      "ToPort": 3306
      }
     ],
     "VpcId": {
@@ -823,6 +832,35 @@
    },
    "Metadata": {
     "aws:cdk:path": "EvoriaStack/EcsTaskRole/Resource"
+   }
+  },
+  "EcsTaskRoleDefaultPolicy50882C77": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ssmmessages:CreateControlChannel",
+        "ssmmessages:CreateDataChannel",
+        "ssmmessages:OpenControlChannel",
+        "ssmmessages:OpenDataChannel"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "EcsTaskRoleDefaultPolicy50882C77",
+    "Roles": [
+     {
+      "Ref": "EcsTaskRole8DFA0181"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "EvoriaStack/EcsTaskRole/DefaultPolicy/Resource"
    }
   },
   "GitHubOidcProvider7EBF861F": {
@@ -1418,6 +1456,7 @@
     }
    },
    "DependsOn": [
+    "EcsTaskRoleDefaultPolicy50882C77",
     "EcsTaskRole8DFA0181",
     "EvoriaAlbHttpListenerC3653327"
    ],

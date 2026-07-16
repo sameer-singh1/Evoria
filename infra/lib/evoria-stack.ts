@@ -71,16 +71,21 @@ export class EvoriaStack extends cdk.Stack {
       'Backend port from ALB only',
     );
 
-    // RDS: only accepts MySQL connections from the Fargate tasks
+    // RDS: accepts MySQL connections from Fargate tasks and local development clients
     const rdsSg = new ec2.SecurityGroup(this, 'RdsSg', {
       vpc,
-      description: 'Evoria RDS - accepts :3306 from Fargate only',
+      description: 'Evoria RDS - accepts :3306 from Fargate and developer',
       allowAllOutbound: false,
     });
     rdsSg.addIngressRule(
       fargateSg,
       ec2.Port.tcp(3306),
       'MySQL from Fargate only',
+    );
+    rdsSg.addIngressRule(
+      ec2.Peer.anyIpv4(), // Allows connections for GUI clients
+      ec2.Port.tcp(3306),
+      'MySQL from developer GUI client',
     );
 
     // =========================================================================
@@ -166,6 +171,17 @@ export class EvoriaStack extends cdk.Stack {
       roleName: 'evoria-ecs-task-role',
       assumedBy: new iam.ServicePrincipal('ecs-tasks.amazonaws.com'),
     });
+
+    // Allow ECS Exec / SSM Session Manager connection
+    taskRole.addToPolicy(new iam.PolicyStatement({
+      actions: [
+        'ssmmessages:CreateControlChannel',
+        'ssmmessages:CreateDataChannel',
+        'ssmmessages:OpenControlChannel',
+        'ssmmessages:OpenDataChannel',
+      ],
+      resources: ['*'],
+    }));
 
     // ── 5c. GitHub Actions OIDC Role ─────────────────────────────────────────
     // OIDC = "OpenID Connect" — a way for GitHub Actions to prove its identity

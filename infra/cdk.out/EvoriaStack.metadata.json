@@ -25,7 +25,7 @@
         "new BaseService2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\core\\lib\\no-box-stack-traces.js:1:345)",
         "new FargateService2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ecs\\lib\\fargate\\fargate-service.js:1:7829)",
         "new FargateService2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\core\\lib\\prop-injectable.js:1:855)",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:353:21)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:369:21)",
         "Object.<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "Module._compile (node:internal/modules/cjs/loader:1761:14)",
         "Module.m._compile (C:\\D\\Evoria\\infra\\node_modules\\ts-node\\src\\index.ts:1618:23)",
@@ -60,7 +60,7 @@
         "new BaseService2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\core\\lib\\no-box-stack-traces.js:1:345)",
         "new FargateService2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\aws-ecs\\lib\\fargate\\fargate-service.js:1:7829)",
         "new FargateService2 (C:\\D\\Evoria\\infra\\node_modules\\aws-cdk-lib\\core\\lib\\prop-injectable.js:1:855)",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:353:21)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:369:21)",
         "Object.<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "Module._compile (node:internal/modules/cjs/loader:1761:14)",
         "Module.m._compile (C:\\D\\Evoria\\infra\\node_modules\\ts-node\\src\\index.ts:1618:23)",
@@ -100,7 +100,7 @@
     {
       "type": "aws:cdk:creationStack",
       "data": [
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:489:5)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:505:5)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -114,7 +114,7 @@
     {
       "type": "aws:cdk:creationStack",
       "data": [
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:494:5)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:510:5)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -128,7 +128,7 @@
     {
       "type": "aws:cdk:creationStack",
       "data": [
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:499:5)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:515:5)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -142,7 +142,7 @@
     {
       "type": "aws:cdk:creationStack",
       "data": [
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:504:5)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:520:5)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -156,7 +156,7 @@
     {
       "type": "aws:cdk:creationStack",
       "data": [
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:509:5)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:525:5)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -170,7 +170,7 @@
     {
       "type": "aws:cdk:creationStack",
       "data": [
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:514:5)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:530:5)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -184,7 +184,7 @@
     {
       "type": "aws:cdk:creationStack",
       "data": [
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:519:5)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:535:5)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -198,7 +198,7 @@
     {
       "type": "aws:cdk:creationStack",
       "data": [
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:524:5)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:540:5)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -212,7 +212,7 @@
     {
       "type": "aws:cdk:creationStack",
       "data": [
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:529:5)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:545:5)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -226,7 +226,7 @@
     {
       "type": "aws:cdk:creationStack",
       "data": [
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:534:5)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:550:5)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -240,7 +240,7 @@
     {
       "type": "aws:cdk:creationStack",
       "data": [
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:539:5)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:555:5)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -401,7 +401,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new Repository2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:91:21)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:96:21)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -416,7 +416,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new DatabaseInstance2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:110:16)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:115:16)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -431,7 +431,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new Role2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:143:31)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:148:31)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -446,7 +446,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new Role2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:165:22)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:170:22)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -461,7 +461,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new OpenIdConnectProvider2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:178:32)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:194:32)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node..."
       ]
@@ -476,7 +476,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new OpenIdConnectProvider2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:178:32)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:194:32)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node..."
       ]
@@ -491,7 +491,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new Role2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:188:31)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:204:31)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -506,7 +506,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new Cluster2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:259:21)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:275:21)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -521,7 +521,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new LogGroup2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:269:22)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:285:22)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -536,7 +536,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new FargateTaskDefinition2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:296:21)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:312:21)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -551,7 +551,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new ApplicationLoadBalancer2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:328:17)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:344:17)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -566,7 +566,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new FargateService2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:353:21)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:369:21)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -581,7 +581,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new ApplicationTargetGroup2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:365:25)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:381:25)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -596,7 +596,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new Distribution2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:402:29)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:418:29)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -611,7 +611,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new Bucket2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:420:28)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:436:28)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -658,7 +658,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new Distribution2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:442:34)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:458:34)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node, ts-node..."
       ]
@@ -948,7 +948,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new DatabaseInstance2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:110:16)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:115:16)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node..."
       ]
@@ -963,7 +963,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new DatabaseInstance2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:110:16)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:115:16)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)"
       ]
     }
@@ -977,7 +977,22 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...WrappedClass.<anonymous> in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:154:23)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:159:23)",
+        "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/EvoriaStack/EcsTaskRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EcsTaskRoleDefaultPolicy50882C77"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.<anonymous> in aws-cdk-lib...",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:176:14)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals..."
       ]
@@ -992,7 +1007,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new OpenIdConnectProvider2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:178:32)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:194:32)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node..."
       ]
@@ -1007,7 +1022,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...WrappedClass.<anonymous> in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:206:23)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:222:23)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals..."
       ]
@@ -1022,7 +1037,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...WrappedClass.<anonymous> in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:336:26)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:352:26)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals..."
       ]
@@ -1037,7 +1052,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new Bucket2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:420:28)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:436:28)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals..."
       ]
@@ -1071,7 +1086,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new DatabaseInstance2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:110:16)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:115:16)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals, ts-node..."
       ]
@@ -1086,7 +1101,7 @@
       "type": "aws:cdk:creationStack",
       "data": [
         "...new Distribution2 in aws-cdk-lib...",
-        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:442:34)",
+        "new EvoriaStack (C:\\D\\Evoria\\infra\\lib\\evoria-stack.ts:458:34)",
         "<anonymous> (C:\\D\\Evoria\\infra\\bin\\evoria.ts:6:1)",
         "...node internals..."
       ]
